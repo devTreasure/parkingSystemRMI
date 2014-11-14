@@ -14,7 +14,7 @@ public class ParkingSystemServer {
 	public ParkingSystemServer(String url) throws RemoteException {
 		this.url = url;
 		
-			IparkingSytemManager parkingManger = new ParkingSystemManager();
+		ParkingSystemManager parkingManger = new ParkingSystemManager();
 			try {
 				Naming.rebind(url, parkingManger);
 			} catch (MalformedURLException e) {
