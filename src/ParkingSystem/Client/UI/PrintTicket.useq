@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.7" icons="true">  
+  <object id="1" language="java" name="ParkingSystem.Client.UI.parkingGUI" project="ParkingSystem" 
+    file="/ParkingSystem/src/ParkingSystem/Client/UI/parkingGUI.java" binary="false" label="parkingGUI" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="44" y="0"/>    
+    <execution id="2">      
+      <position height="677" width="85" x="5" y="195"/>    
+    </execution>  
+  </object>  
+  <object id="5" language="java" name="ParkingSystem.controller.ParkingSystemManager" project="ParkingSystem" 
+    file="/ParkingSystem/src/ParkingSystem/controller/ParkingSystemManager.java" binary="false" 
+    label="parkingSystemManager1" type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="4">      
+      <position height="635" width="160" x="5" y="216"/>    
+    </execution>    
+    <execution id="14">      
+      <position height="21" width="7" x="82" y="788"/>    
+    </execution>  
+  </object>  
+  <object id="15" language="java" name="ParkingSystem.controller.OccupancyManagement" project="ParkingSystem" 
+    file="/ParkingSystem/src/ParkingSystem/controller/OccupancyManagement.java" binary="false" label="occupancy" 
+    type="class" autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="13">      
+      <position height="21" width="0" x="0" y="576"/>    
+    </execution>  
+  </object>  
+  <object id="16" language="java" name="ParkingSystem.controller.TicketManagement" project="ParkingSystem" 
+    file="/ParkingSystem/src/ParkingSystem/controller/TicketManagement.java" binary="false" label="ticketManagement" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="477" y="0"/>    
+    <execution id="7">      
+      <position height="383" width="132" x="169" y="447"/>    
+    </execution>    
+    <execution id="22">      
+      <position height="112" width="7" x="232" y="676"/>    
+    </execution>  
+  </object>  
+  <object id="25" language="java" name="ParkingSystem.controller.FraudPreventionManagement" project="ParkingSystem" 
+    file="/ParkingSystem/src/ParkingSystem/controller/FraudPreventionManagement.java" binary="false" 
+    label="fraudPreventionManagement" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="910" y="0"/>    
+    <execution id="20">      
+      <position height="238" width="190" x="305" y="571"/>    
+    </execution>    
+    <execution id="24">      
+      <position height="21" width="190" x="305" y="746"/>    
+    </execution>    
+    <execution id="29">      
+      <position height="21" width="7" x="587" y="660"/>    
+    </execution>  
+  </object>  
+  <object id="30" language="java" name="ParkingSystem.Entities.Ticket" project="ParkingSystem" 
+    file="/ParkingSystem/src/ParkingSystem/Entities/Ticket.java" binary="false" label="ticket" type="class" 
+    autoSize="true">    
+    <position height="0" width="0" x="0" y="0"/>    
+    <execution id="27">      
+      <position height="101" width="0" x="0" y="601"/>    
+    </execution>    
+    <execution id="18">      
+      <position height="21" width="105" x="580" y="478"/>    
+    </execution>    
+    <execution id="9">      
+      <position height="21" width="0" x="0" y="504"/>    
+    </execution>    
+    <execution id="11">      
+      <position height="21" width="0" x="0" y="534"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="printTicketOperation():void">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="6" operation="createTicket():ParkingSystem.Entities.Ticket">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </message>  
+  <message id="8" operation="activatetheTicektStatus():void">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="9"/>  
+  </message>  
+  <message id="10" operation="generateTicketID():java.util.UUID" x="187" y="510">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="11"/>  
+  </message>  
+  <message id="12" operation="incrementOcccupancy():void">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="13"/>  
+  </message>  
+  <message id="17">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="18"/>  
+  </message>  
+  <message id="19" operation="isValidTicket(ParkingSystem.Entities.Ticket):java.lang.Boolean">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="20"/>  
+  </message>  
+  <message id="21">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </message>  
+  <message id="23" operation="setTicketcollection(java.util.List&lt;ParkingSystem.Entities.Ticket&gt;):void">    
+    <end type="SOURCE" refId="22"/>    
+    <end type="TARGET" refId="24"/>  
+  </message>  
+  <message id="26" operation="getTicektStatus():ParkingSystem.Entities.TicketStatus" x="821" y="628">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="27"/>  
+  </message>  
+  <message id="28">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="22"/>  
+  </message>  
+  <message id="31">    
+    <end type="SOURCE" refId="27"/>    
+    <end type="TARGET" refId="29"/>  
+  </message>
+</sequence-diagram>
