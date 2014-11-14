@@ -1,0 +1,73 @@
+1. Grasp   - a day
+2. Reporting  - a day
+3. unit Testing   - day 
+4. UI   --needs a day
+5. Sequence diagram   
+6. Class Diagram   --needs  
+7. Overall Testing -- 1 days
+
+remove unused import  ctl+shft+O
+remove unused code/commented code 
+write  test case for each controller
+create parkingsystem.report 
+--test cases for above  
+--interface report and multiple  class for each report type
+-- Convert int report type to Enum
+
+Gate
+
+:
+
+Ticekt
+Add ui option to select gate before printing  ticket
+Print ticket
+add the  gateid to ticket
+add the time stamp
+verify the ticket status once ticket is paid.
+
+-- pay the  fee
+
+--check the time stamp
+--check the latest time-stamp
+--check the  diff
+--increment  one count
+-- find the hourly rate (flexible --getter setter)
+--verify the payment
+--confirm the payment
+-- open the exit gate
+--void the ticket
+-- decrement parking count
+
+
+occupancy management
+--once parking count reaches to max capcity ,halt issuing new parking
+
+
+Fraud  management
+--------------------------------------
+--------------------------------------
+
+Exit gate can not be opend before pay.
+open per ticket only.
+once ticket is void it can not be used at entry or at payment.
+check its id  during reissuing ticket.
+credit card payment checking.
+once ticket is void can not be activated.
+gate opened gate must close.
+no two entries to two different gate for same ticket.
+
+------------------------------------------------------
+-----------------------------------------------------
+-----------------------------------------------------
+-----------------------------------------------------
+TDD 
+
+must have
+could have 
+
+should have
+
+
+
+
+
