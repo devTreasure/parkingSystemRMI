@@ -1,10 +1,16 @@
 package ParkingSystem.Entities;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class Ticket {
+public class Ticket implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public int hashCode() {

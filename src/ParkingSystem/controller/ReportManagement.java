@@ -1,5 +1,6 @@
 package ParkingSystem.controller;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,8 +8,12 @@ import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Reports.ReportCreator;
 
-public class ReportManagement {
+public class ReportManagement implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private TicketManagement ticketManagement;
 
 	public ReportManagement(TicketManagement ticketManagement) {

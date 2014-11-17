@@ -1,5 +1,6 @@
 package ParkingSystem.controller;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import javax.swing.JOptionPane;
@@ -7,8 +8,12 @@ import javax.swing.JOptionPane;
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Status;
 
-public class TransactionManagement {
+public class TransactionManagement implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// TODO: add all ticket transaction in collection for report ,yearly,monthly
 	// weekly calculation
 

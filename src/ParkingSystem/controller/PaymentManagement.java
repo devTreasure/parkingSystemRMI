@@ -1,12 +1,18 @@
 package ParkingSystem.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Ticket;
 
-public class PaymentManagement {
+public class PaymentManagement  implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private CreditCard creditCard;
 

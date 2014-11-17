@@ -66,6 +66,16 @@ must have
 could have 
 
 should have
+-----------------
+
+Oberver pattern at gate stratagey ?
+
+reporting
+
+manual pay option
+
+gate override
+
 
 
 

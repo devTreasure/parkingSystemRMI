@@ -1,6 +1,6 @@
 package ParkingSystem.Server;
 
-import ParkingSystem.Common.IparkingSytemManager;
+import ParkingSystem.Common.IparkingSystemManager;
 import ParkingSystem.controller.ParkingSystemManager;
 
 import java.net.MalformedURLException;
@@ -15,9 +15,14 @@ public class ParkingSystemServer {
 		this.url = url;
 		
 		ParkingSystemManager parkingManger = new ParkingSystemManager();
+		
 			try {
-				Naming.rebind(url, parkingManger);
-			} catch (MalformedURLException e) {
+				
+			Naming.rebind(url, parkingManger);
+			
+			} catch (MalformedURLException e) 
+			
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -27,11 +32,14 @@ public class ParkingSystemServer {
 	}
 
 	public static void main(String[] args) {
+		
 		// TODO Auto-generated method stub
 		String url = new String("rmi://" +
 				 args[0] + ":" + args[1] + "/ParkingService"); 
 		try {
 			new ParkingSystemServer(url);
+			
+			System.out.println("Parking service cliet is running.....");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

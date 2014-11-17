@@ -1,12 +1,18 @@
 package ParkingSystem.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.Ticket;
 
-public class TicketManagement {
+public class TicketManagement implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Ticket ticket;
 

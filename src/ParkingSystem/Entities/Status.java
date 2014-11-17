@@ -1,7 +1,13 @@
 package ParkingSystem.Entities;
 
-public class Status {
+import java.io.Serializable;
 
+public class Status implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Boolean status;
 	private String message;
 

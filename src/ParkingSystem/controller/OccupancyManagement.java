@@ -1,9 +1,15 @@
 package ParkingSystem.controller;
 
+import java.io.Serializable;
+
 import ParkingSystem.Entities.ParkingStatus;
 
-public class OccupancyManagement {
+public class OccupancyManagement  implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int parkingCapacity;
 	public int currentParkingOccupancy;
 	public ParkingStatus parkingstatus;

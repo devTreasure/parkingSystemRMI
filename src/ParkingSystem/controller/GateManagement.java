@@ -1,5 +1,6 @@
 package ParkingSystem.controller;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,12 @@ import ParkingSystem.Entities.ExitGate;
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.GateStatus;
 
-public class GateManagement {
+public class GateManagement implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Map<Integer, Gate> gateMovementcollection = new HashMap<Integer, Gate>();
 

@@ -1,9 +1,14 @@
 package ParkingSystem.Entities;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class CreditCard {
+public class CreditCard  implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String CCNumner;
 	private String expiryDate;
 	private int cvvNumber;
