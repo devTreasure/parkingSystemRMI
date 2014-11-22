@@ -660,6 +660,84 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
+	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
+		JOptionPane.showMessageDialog(null, "Collection Report");
+		String choiceSelection = choiseReport.getSelectedItem();
+          double totalCollection=0;
+		if (choiceSelection == "Hourly") {
+			Date dst = null;
+
+			SimpleDateFormat hrly = new SimpleDateFormat("MM/dd/yy");
+
+			List<ReportCollection> reportWeekly = new ArrayList<ReportCollection>();
+
+			String stDate = JOptionPane
+					.showInputDialog("Enter start Date Input: MM/dd/yy");
+
+			try {
+
+				dst = hrly.parse(stDate);
+
+				for (ReportCollection c : parkingManager.getPaymanager().getCreditReportcollection()
+						) {
+
+					if (hrly.format(c.getCreditcardpaymentTime())
+							.equals(stDate)) 
+					{
+						totalCollection+=c.getAmount();
+						reportWeekly.add(c);
+					}
+				}
+				
+				for (ReportCollection cc : reportWeekly) 
+				
+				{
+
+					System.out.println((String.format(
+							"    %tc             %s         %s       %f   ", cc
+									.getCreditcardpaymentTime(), cc
+									.getCCNumner().toString(), cc.getTicketID()
+									.toString(), cc.getAmount())));
+				}
+				System.out.println((String.format("    Total collection Amount :      %f   ", totalCollection)));
+				
+
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// List<HourlyData> exitdata = new ArrayList<HourlyData>();
+		}
+	}
+	
+	   private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+	        // TODO add your handling code here:
+			JOptionPane.showMessageDialog(null,	"Date change clicked");
+			
+		//	setTheHourTimeSimulation
+		//	Date dateEntry=  c.
+			
+			if(!checkbox1.getState())	
+			{
+				String ticketID=choice1.getSelectedItem();
+				
+				Ticket t=parkingManager.findTicketFromID(ticketID);
+				if(t!= null)
+				{
+					t.setEntryTime(setTheHourTimeSimulation());
+				}
+			}
+			
+	    }       
+	
+    private void choice1ItemStateChanged(java.awt.event.ItemEvent evt) {                                         
+        // TODO add your handling code here:
+    	
+    } 
+	
 	public void constructTable() {
 
 	}
