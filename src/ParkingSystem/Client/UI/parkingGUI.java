@@ -250,8 +250,8 @@ public class parkingGUI extends JFrame implements Serializable {
 		try {
 
 			if (parkingManager.getGatemanagement().gate.gateStatus == GateStatus.Open) {
-				parkingManager.getGatemanagement()
-						.closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+				parkingManager.getGatemanagement().closeEntryGate(
+						parkingManager.getGatemanagement().gate.GateId);
 
 				// ticket with gate
 				// movement is added
@@ -260,13 +260,13 @@ public class parkingGUI extends JFrame implements Serializable {
 				// fraud
 				// activity
 
-				parkingManager.getFraudManager().ticketgatecollection
-						.put(parkingManager.ticket,
-								parkingManager.getGatemanagement().gate);
+				parkingManager.getFraudManager().ticketgatecollection.put(
+						parkingManager.ticket,
+						parkingManager.getGatemanagement().gate);
 
-				jTextField3.setText(parkingManager
-						.getGatemanagement().gate.gateStatus
-						.toString());
+				jTextField3
+						.setText(parkingManager.getGatemanagement().gate.gateStatus
+								.toString());
 			}
 		} catch (Exception ex) {
 
