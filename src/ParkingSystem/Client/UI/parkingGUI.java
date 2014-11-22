@@ -181,8 +181,8 @@ public class parkingGUI extends JFrame implements Serializable {
 	
 	private void closeGateActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
-			parkingManager.getGatemanagement()
-					.closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+			parkingManager.getGatemanagement().closeEntryGate(
+					parkingManager.getGatemanagement().gate.GateId);
 		} catch (Exception ex) {
 
 		}
