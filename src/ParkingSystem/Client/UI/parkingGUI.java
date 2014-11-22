@@ -632,35 +632,29 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
-	private void buttonGate1ActionPerformed(
-			java.awt.event.ActionEvent evt)
+	private void buttonGate1ActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException {
 
-		parkingManager.getGatemanagement().gate = new EntryGate(
-				1);
+		parkingManager.getGatemanagement().gate = new EntryGate(1);
 		JOptionPane.showMessageDialog(null,
 				"Entry gate 1 is Selected, Please print ticket now");
 
 	}
 
-	private void buttonGate2ActionPerformed(
-			java.awt.event.ActionEvent evt)
+	private void buttonGate2ActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException {
 		// TODO add your handling code here:
 
-		parkingManager.getGatemanagement().gate = new EntryGate(
-				2);
+		parkingManager.getGatemanagement().gate = new EntryGate(2);
 		JOptionPane.showMessageDialog(null,
 				"Entry gate 2 is Selected, Please print ticket now");
 
 	}
 
-	private void buttonGate3ActionPerformed(
-			java.awt.event.ActionEvent evt)
+	private void buttonGate3ActionPerformed(java.awt.event.ActionEvent evt)
 			throws RemoteException {
 		// TODO add your handling code here:
-		parkingManager.getGatemanagement().gate = new EntryGate(
-				3);
+		parkingManager.getGatemanagement().gate = new EntryGate(3);
 		JOptionPane.showMessageDialog(null,
 				"Entry gate 3 is Selected, Please print ticket now");
 
