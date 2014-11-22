@@ -279,45 +279,35 @@ public class parkingGUI extends JFrame implements Serializable {
 			UUID ticketID = null;
 
 			try {
-				ticketID = UUID.fromString(choice1
-						.getSelectedItem());
+				ticketID = UUID.fromString(choice1.getSelectedItem());
 			} catch (Exception ex) {
 
 			}
 
-			Status exitStatus = parkingManager
-					.processExitFor(ticketID);
-			JOptionPane.showMessageDialog(null,
-					exitStatus.getMessage());
+			Status exitStatus = parkingManager.processExitFor(ticketID);
+			JOptionPane.showMessageDialog(null, exitStatus.getMessage());
 
 			if (exitStatus.getStatus()) {
-				jTextField10.setText(parkingManager.ticket
-						.getTicketID()
+				jTextField10.setText(parkingManager.ticket.getTicketID()
 						.toString());
-				jTextField11.setText(parkingManager.ticket
-						.getTicektStatus()
+				jTextField11.setText(parkingManager.ticket.getTicektStatus()
 						.toString());
-				jTextField12.setText(parkingManager.ticket
-						.getEntryTime()
+				jTextField12.setText(parkingManager.ticket.getEntryTime()
 						.toString());
 			}
 
-			parkingManager.getFraudManager()
-					.checkentryExitOperation();
+			parkingManager.getFraudManager().checkentryExitOperation();
 
-			label5.setText(String.valueOf(parkingManager
-					.getOccupancy().currentParkingOccupancy));
+			label5.setText(String.valueOf(parkingManager.getOccupancy().currentParkingOccupancy));
 			// Gate
 			// g=objticketmanager.gatemanagement.ExitGate(1);
 
-			if (parkingManager.getOccupancy()
-					.isParkingfull()) {
+			if (parkingManager.getOccupancy().isParkingfull()) {
 				buttonPrintTicket.setVisible(false);
 			} else {
 
 				buttonPrintTicket.setVisible(true);
-				jTextField2.setText(ParkingStatus.Open
-						.toString());
+				jTextField2.setText(ParkingStatus.Open.toString());
 
 			}
 		} catch (Exception ex) {
