@@ -743,17 +743,17 @@ public class parkingGUI extends JFrame implements Serializable {
 	}
 
 	private void ReportActionPerformed(java.awt.event.ActionEvent evt)
-			throws ParseException,
-			RemoteException {
+			throws ParseException, RemoteException {
 		// TODO add your handling code here:
 		// Report type enum need to be used for replacing
 		// integer arg
 
+		
 		ReportType reportType = null;
-
 		List<Ticket> reportHourlyData = new ArrayList<Ticket>();
-		SimpleDateFormat sdf = new SimpleDateFormat(
-				"MM/dd/yy hh:mm:ss");
+		/*
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy hh:mm:ss");
 
 		Date d1 = sdf.parse("07/01/12 01:23:45");
 
@@ -761,6 +761,8 @@ public class parkingGUI extends JFrame implements Serializable {
 		Date d22 = sdf.parse("07/01/14 02:55:56");
 
 		Date d3 = sdf.parse("07/01/14 01:45:45");
+		Date d33 = sdf.parse("07/01/14 01:55:23");
+
 		Date d4 = sdf.parse("07/01/14 01:55:45");
 
 		Date d5 = sdf.parse("07/01/14 04:35:45");
@@ -783,6 +785,9 @@ public class parkingGUI extends JFrame implements Serializable {
 
 		Ticket t3 = new Ticket();
 		t3.setEntryTime(d3);
+
+		t3.setExitTime(d33);
+
 		t2.setTicketID(UUID.randomUUID());
 
 		Ticket t4 = new Ticket();
@@ -824,13 +829,16 @@ public class parkingGUI extends JFrame implements Serializable {
 		reportHourlyData.add(t9);
 
 		// System.out.print(choiseReport.getSelectedItem());
+		 * 
+		 */
 
-		String choiceSelection = choiseReport
-				.getSelectedItem();
+		String choiceSelection = choiseReport.getSelectedItem();
 
-		if (choiceSelection == "Hourly") {
-			SimpleDateFormat hrly = new SimpleDateFormat(
-					"MM/dd/yy");
+		if (choiceSelection == "Daily") 
+		
+		{
+
+			SimpleDateFormat hrly = new SimpleDateFormat("MM/dd/yy");
 
 			List<HourlyData> reportHourly = new ArrayList<HourlyData>();
 
@@ -838,15 +846,25 @@ public class parkingGUI extends JFrame implements Serializable {
 
 			String stDate = JOptionPane.showInputDialog("Enter start Date Input: mm/dd/yy");
 
-			Date dst = hrly.parse(stDate);
-
+			
+			Date dt=  hrly.parse(stDate);
+			
 			int y = 0;
 
 			int k = 0;
+			
+			reportType = ReportType.Daily;
 
-			while (y <= 11.59) {
+			List<HourlyData> reportHourly1 = parkingManager.getReportManagement().generateReport(reportType,parkingManager.getTicketmager().getTicketcollection(),dt);
+
+          
+			
+			while (y <= 11.59) 
+			{
 				HourlyData datacount = null;
 				HourlyData data = null;
+				HourlyData Exitdata = null;
+
 				int count = 0;
 				int hour = 0;
 				int exitcount = 0;
@@ -855,21 +873,18 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				k = y;
 
-				data.setTimeperiod(String.format(
-						"Hours %d -  %d",
-						k,
-						++k));
-				reportHourly.add(data);
+				data.setTimeperiod(String.format("Hours %d -  %d", k, ++k));
+
+				reportHourly1.add(data);
+
 				for (Ticket t : reportHourlyData) {
 
-					if (hrly.format(t.getEntryTime())
-							.equals(stDate)) {
+					if (hrly.format(t.getEntryTime()).equals(stDate)) {
 
-						if ((t.getEntryTime()
+						if ((t.getEntryTime() != null && t.getEntryTime()
 								.getHours() == y)) {
 
-							if (t.getEntryTime()
-									.getMinutes() <= 59) {
+							if (t.getEntryTime().getMinutes() <= 59) {
 								data = new HourlyData();
 
 								count++;
@@ -878,7 +893,26 @@ public class parkingGUI extends JFrame implements Serializable {
 								data.setEntrydt(t.getEntryTime());
 								data.setTicketid(t.getTicektID());
 
-								reportHourly.add(data);
+								reportHourly1.add(data);
+
+							}
+
+						}
+
+						if ((t.getExitTime() != null && t.getExitTime()
+								.getHours() == y)) {
+
+							if (t.getExitTime().getMinutes() <= 59) {
+								Exitdata = new HourlyData();
+
+								exitcount++;
+
+								hour = y;
+
+								Exitdata.setExitdt(t.getExitTime());
+								Exitdata.setTicketid(t.getTicektID());
+
+								reportHourly1.add(Exitdata);
 
 							}
 
@@ -889,98 +923,220 @@ public class parkingGUI extends JFrame implements Serializable {
 				}
 
 				datacount = new HourlyData();
+				HourlyData dataExitcount = new HourlyData();
 
 				datacount.setHourlyEntry(count);
+				dataExitcount.setHourlyExit(exitcount);
 
 				if (count > 0)
-					reportHourly.add(datacount);
+					reportHourly1.add(datacount);
+				if (exitcount > 0)
+					reportHourly1.add(dataExitcount);
 
 				y++;
 			}
+            
+		  
 
-			SimpleDateFormat df = new SimpleDateFormat(
-					"MM/dd/yy");
-
-			for (HourlyData hd : reportHourly) {
+			for (HourlyData hd : reportHourly1) {
 
 				if (hd.getTimeperiod() != null)
 					System.out.println(hd.getTimeperiod());
 
-				if (hd.getEntrydt() != null
-						&& hd.getTicketid() != null) {
+				if (hd.getEntrydt() != null && hd.getTicketid() != null) {
 					System.out.println((String.format(
-							"Entry    %tc          %s  ",
-							hd.getEntrydt(),
-							hd.getTicketid()
-									.toString())));
+							"Entry    %tc          %s  ", hd.getEntrydt(), hd
+									.getTicketid().toString())));
+
+				}
+
+				if (hd.getExitdt() != null && hd.getTicketid() != null) {
+					System.out.println((String.format(
+							"Exit     %tc          %s  ", hd.getExitdt(), hd
+									.getTicketid().toString())));
 
 				}
 
 				if (hd.getHourlyEntry() > 0)
-					System.out.println(String.format(
-							"Entry : %d   ",
+					System.out.println(String.format("Entry : %d   ",
 							hd.getHourlyEntry()));
-			}
 
-			for (HourlyData hd : reportHourly) {
-
-				if (hd.getExitdt() != null
-						&& hd.getTicketid() != null)
-					System.out.println((String.format(
-							"Exit  %tc          %s  ",
-							hd.getExitdt(),
-							hd.getTicketid()
-									.toString())));
-
-				System.out.print(String.format(
-						"Exit : %d   ",
-						hd.getHourlyExit()));
-				System.out.print("\n");
+				if (hd.getHourlyExit() > 0)
+					System.out.println(String.format("Exit  : %d   ",
+							hd.getHourlyExit()));
 
 			}
-			reportType = ReportType.Daily;
-			reportType = ReportType.Weekly;
 
-			List<Ticket> reportData = parkingManager
-					.getReportManagement()
-					.generateReport(reportType);
+			/*
+			 * for (HourlyData hd : reportHourly) {
+			 * 
+			 * if (hd.getExitdt() != null && hd.getTicketid() != null)
+			 * System.out.println((String.format( "Exit  %tc          %s  ",
+			 * hd.getExitdt(), hd .getTicketid().toString())));
+			 * 
+			 * System.out.print(String.format("Exit : %d   ",
+			 * hd.getHourlyExit())); System.out.print("\n");
+			 * 
+			 * }
+			 */
+			//reportType = ReportType.Daily;
+			//reportType = ReportType.Weekly;
 
-			String[] columnNames = {
-					"TicketID",
-					"Entry Time ",
-					"Exit Time",
+			/*
+			List<Ticket> reportData = parkingManager.getReportManagement().generateReport(reportType,parkingManager.getTicketmager().getTicketcollection(),dt);
+
+			String[] columnNames = { "TicketID", "Entry Time ", "Exit Time",
 					"Amount" };
 
-			Object[][] data = new Object[reportData
-					.size()][4];
+			Object[][] data = new Object[reportData.size()][4];
 
 			for (int i = 0; i < reportData.size(); i++) {
-				data[i][0] = reportData.get(i)
-						.getTicektID();
-				data[i][1] = reportData.get(i)
-						.getEntryTime();
-				data[i][2] = reportData.get(i)
-						.getExitTime();
-				data[i][3] = reportData.get(i)
-						.getTicketAmount();
+				data[i][0] = reportData.get(i).getTicektID();
+				data[i][1] = reportData.get(i).getEntryTime();
+				data[i][2] = reportData.get(i).getExitTime();
+				data[i][3] = reportData.get(i).getTicketAmount();
 
 			}
 
 			JDialog dialog = new JDialog();
-			dialog.setBounds(500, 500, 800,
-					700);
+			dialog.setBounds(500, 500, 800, 700);
 			dialog.setLayout(new GridLayout());
 			dialog.setEnabled(true);
 			dialog.setModal(true);
 
-			dialog.getContentPane()
-					.add(new JTable(
-							data,
-							columnNames));
+			dialog.getContentPane().add(new JTable(data, columnNames));
 
 			dialog.setVisible(true);
 
 			dialog.show();
+		*/
+		}
+
+		if (choiceSelection == "Weekley")
+		{
+
+			SimpleDateFormat hrly = new SimpleDateFormat("MM/dd/yy");
+
+			List<HourlyData> reportWeekly = new ArrayList<HourlyData>();
+
+			List<HourlyData> exitdata = new ArrayList<HourlyData>();
+
+			String stDate = JOptionPane.showInputDialog("Enter Week start Date Input: mm/dd/yy");
+
+			Date dstart = hrly.parse(stDate);
+
+			String stendDate = JOptionPane.showInputDialog("Enter Week End Date Input: mm/dd/yy");
+
+			Date dend = hrly.parse(stendDate);
+
+			int y = 0;
+
+			int k = 0;
+
+			while (y <= 11.59) {
+				HourlyData datacount = null;
+				HourlyData data = null;
+				HourlyData Exitdata = null;
+
+				int count = 0;
+				int hour = 0;
+				int exitcount = 0;
+
+				data = new HourlyData();
+
+				k = y;
+
+				data.setTimeperiod(String.format("Hours %d -  %d", k, ++k));
+
+				reportWeekly.add(data);
+
+				for (Ticket t : reportHourlyData) {
+
+					if (t.getEntryTime().after(dstart)
+							|| t.getEntryTime().before(dend)) // Week comparing
+					{
+
+						if ((t.getEntryTime() != null && t.getEntryTime()
+								.getHours() == y)) {
+
+							if (t.getEntryTime().getMinutes() <= 59) {
+								data = new HourlyData();
+
+								count++;
+								hour = y;
+
+								data.setEntrydt(t.getEntryTime());
+								data.setTicketid(t.getTicektID());
+
+								reportWeekly.add(data);
+
+							}
+
+						}
+
+						if ((t.getExitTime() != null && t.getExitTime()
+								.getHours() == y)) {
+
+							if (t.getExitTime().getMinutes() <= 59) {
+								Exitdata = new HourlyData();
+
+								exitcount++;
+
+								hour = y;
+
+								Exitdata.setExitdt(t.getExitTime());
+								Exitdata.setTicketid(t.getTicektID());
+
+								reportWeekly.add(Exitdata);
+
+							}
+
+						}
+
+					}
+
+				}
+
+				datacount = new HourlyData();
+				HourlyData dataExitcount = new HourlyData();
+
+				datacount.setHourlyEntry(count);
+				dataExitcount.setHourlyExit(exitcount);
+
+				if (count > 0)
+					reportWeekly.add(datacount);
+				if (exitcount > 0)
+					reportWeekly.add(dataExitcount);
+
+				y++;
+			}
+
+		
+
+			for (HourlyData hd : reportWeekly) {
+
+				if (hd.getTimeperiod() != null)
+					System.out.println(hd.getTimeperiod());
+
+				if (hd.getEntrydt() != null && hd.getTicketid() != null) {
+					System.out.println((String.format(
+							"Entry    %tc          %s  ", hd.getEntrydt(), hd.getTicketid().toString())));
+
+				}
+
+				if (hd.getExitdt() != null && hd.getTicketid() != null) {
+					System.out.println((String.format(
+							"Exit     %tc          %s  ", hd.getExitdt(), hd.getTicketid().toString())));
+
+				}
+
+				if (hd.getHourlyEntry() > 0)
+					System.out.println(String.format("Entry : %d   ",		hd.getHourlyEntry()));
+
+				if (hd.getHourlyExit() > 0)
+					System.out.println(String.format("Exit  : %d   ",  	hd.getHourlyExit()));
+
+			}
 
 		}
 
