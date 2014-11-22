@@ -536,12 +536,10 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
-	public void printTicketActionPerformed(
-			java.awt.event.ActionEvent evt) {
+	public void printTicketActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 
-			if (parkingManager.getOccupancy()
-					.isParkingfull()) {
+			if (parkingManager.getOccupancy().isParkingfull()) {
 				parkingManager.getGatemanagement().gate.GateId = 0;
 
 				buttonPrintTicket.setVisible(false);
@@ -613,14 +611,14 @@ public class parkingGUI extends JFrame implements Serializable {
 						jLabel4.setText("Error...Please Retry");
 					}
 
-					jTextField3.setText(parkingManager
-							.getGatemanagement().gate.gateStatus
-							.toString());
+					jTextField3
+							.setText(parkingManager.getGatemanagement().gate.gateStatus
+									.toString());
 
 				} else {
-					jTextField3.setText(parkingManager
-							.getGatemanagement().gate.gateStatus
-							.toString());
+					jTextField3
+							.setText(parkingManager.getGatemanagement().gate.gateStatus
+									.toString());
 				}
 			} else
 
