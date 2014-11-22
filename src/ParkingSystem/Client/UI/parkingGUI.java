@@ -317,150 +317,220 @@ public class parkingGUI extends JFrame implements Serializable {
 	}
 
 	public void paymentActionPerformed(ActionEvent evt) {
-		try {
-			ArrayList<String> error = new ArrayList<String>();
 
+		try {
+
+			ArrayList<String> error = new ArrayList<String>();
+			Status status = null;
 			String regex = "\\d+";
 			Boolean validentry = false;
 
-			if (jTextField4.getText().length() > 0)
+			if (isCreditpay) {
 
-			{
-				if (jTextField4.getText()
-						.length() > 16
-						|| jTextField4.getText()
-								.length() < 16) {
-					JOptionPane.showMessageDialog(null,
-							"Please enter valid card number");
-					error.add("Please enter valid card number");
-				}
-
-				boolean validate = jTextField4.getText()
-						.matches("[0-9]+");
-				;
-
-				if (!validate) {
-					JOptionPane.showMessageDialog(null,
-							"Please enter Numeric values only.");
-					error.add("Please enter Numeric values only.");
-					validentry = false;
-
-				} else
+				if (jTextField4.getText().length() > 0)
 
 				{
-					validentry = true;
-
-				}
-
-			}
-
-			else {
-				JOptionPane.showMessageDialog(null,
-						"Credit number is required");
-				error.add("Credit number is required");
-				validentry = false;
-			}
-			// JOptionPane.showMessageDialog(null,
-			// "My Goodness, this is a pay");
-
-			if (jTextField7.toString()
-					.length() > 0) {
-				boolean validate = jTextField7.getText()
-						.matches("[0-9]+");
-				;
-
-				if (!validate) {
-					error.add("Please enter Numeric values only.");
-					JOptionPane.showMessageDialog(null,
-							"Please enter Numeric values only.");
-
-				} else {
-					if (jTextField7.getText()
-							.length() > 3
-							|| (jTextField7.getText()
-									.length() < 3)) {
-						error.add("Entered cvv is incorrect.");
+					if (jTextField4.getText().length() > 16
+							|| jTextField4.getText().length() < 16) {
 						JOptionPane.showMessageDialog(null,
-								"Entered cvv is incorrect.");
-						validentry = false;
-					} else
-						validentry = true;
-				}
-
-			}
-
-			else {
-				validentry = false;
-				error.add("Entered cvv is incorrect.");
-				JOptionPane.showMessageDialog(null,
-						"Please enter cvv.");
-			}
-
-			if (jTextField6.toString()
-					.length() > 0) {
-				Calendar cal = Calendar.getInstance();
-
-				int year = cal.get(Calendar.YEAR);
-				int month = cal.get(Calendar.MONTH);
-
-				String entermonth[] = new String[2];
-
-				try {
-					String string = jTextField6.getText()
-							.toString();
-					String[] parts = string.split("/");
-
-					if (entermonth.length > 0) {
-						int entedmonth = Integer.parseInt(parts[0]);
-						int entedyear = Integer.parseInt(parts[1]);
-
-						if (entedyear < year) {
-							validentry = false;
-							error.add("Please enter valid month/year.");
-							JOptionPane.showMessageDialog(null,
-									"Please enter valid month/year.");
-						} else {
-							validentry = true;
-						}
-					} else {
-						validentry = false;
-						error.add("Please enter the date  in mm/YYYY format.");
-						JOptionPane.showMessageDialog(null,
-								"Please enter the date  in mm/YYYY format.");
+								"Please enter valid card number");
+						error.add("Please enter valid card number");
 					}
-				} catch (Exception e)
 
-				{
-					validentry = false;
-					error.add("Please enter valid month/year.");
-					JOptionPane.showMessageDialog(null,
-							"Please enter valid month/year.");
+					boolean validate = jTextField4.getText().matches("[0-9]+");
+					;
+
+					if (!validate) {
+						JOptionPane.showMessageDialog(null,
+								"Please enter Numeric values only.");
+						error.add("Please enter Numeric values only.");
+						validentry = false;
+
+					} else
+
+					{
+						validentry = true;
+
+					}
+
 				}
+
+				else {
+					JOptionPane.showMessageDialog(null,
+							"CreditCard number is required");
+					error.add("CreditCard number is required");
+					validentry = false;
+				}
+				// JOptionPane.showMessageDialog(null,
+				// "My Goodness, this is a pay");
+
+				if (jTextField7.toString().length() > 0) {
+					boolean validate = jTextField7.getText().matches("[0-9]+");
+					;
+
+					if (!validate) {
+						error.add("Please enter Numeric values only.");
+						JOptionPane.showMessageDialog(null,
+								"Please enter Numeric values only.");
+
+					} else {
+						if (jTextField7.getText().length() > 3
+								|| (jTextField7.getText().length() < 3)) {
+							error.add("Entered cvv is incorrect.");
+							JOptionPane.showMessageDialog(null,
+									"Entered cvv is incorrect.");
+							validentry = false;
+						} else
+							validentry = true;
+					}
+
+				}
+
+				else {
+					validentry = false;
+					error.add("Entered cvv is incorrect.");
+					JOptionPane.showMessageDialog(null, "Please enter cvv.");
+				}
+
+				if (jTextField6.toString().length() > 0) {
+					Calendar cal = Calendar.getInstance();
+
+					Date today = Calendar.getInstance().getTime();
+
+					cal.setTime(today);
+
+					int year = cal.get(Calendar.YEAR);
+					int month = cal.get(Calendar.MONTH) + 1;
+
+					String entermonth[] = new String[2];
+
+					try {
+						String string = jTextField6.getText().toString();
+						String[] parts = string.split("/");
+
+						if (entermonth.length > 0) {
+
+							if (parts[0].length() > 2) {
+								error.add("Please enter valid month");
+
+							}
+
+							if (parts[0].length() > 4) {
+								error.add("Please enter valid year");
+							}
+
+							int entedmonth = Integer.parseInt(parts[0]);
+							int entedyear = Integer.parseInt(parts[1]);
+
+							if (entedyear < year) {
+
+								validentry = false;
+								error.add("Please enter valid month/year.");
+								JOptionPane.showMessageDialog(null,
+										"Please enter valid month/year.");
+							}
+
+							else if (entedyear == year) {
+								if (entedmonth < month) {
+
+									validentry = false;
+
+								} else if (entedmonth > month) {
+
+									validentry = true;
+								} else // enter month is grater than currecnt
+										// calander month
+								{
+
+									validentry = true;
+								}
+
+							} else if (entedyear > year) {
+
+								validentry = true;
+							}
+						}
+
+						else {
+							validentry = false;
+							error.add("Please enter the date  in mm/YYYY format.");
+							JOptionPane.showMessageDialog(null,	"Please enter the date  in mm/YYYY format.");
+						}
+
+					} catch (Exception e)
+
+					{
+						validentry = false;
+						error.add("Please enter valid month/year.");
+						JOptionPane.showMessageDialog(null,
+								"Please enter valid month/year.");
+					}
+				}
+
+				Calendar c = Calendar.getInstance();
+				Date paymentDt = c.getTime();
+
+				// we need to capture failed payments as well?
+				parkingManager.getPaymanager().getCreditCard().setCreditcardpaymentTime(paymentDt);
+
+				if (validentry && error.size() < 1) {
+
+					parkingManager.getPaymanager().getCreditCard()
+							.setCCNumner(jTextField4.getText());
+					
+					parkingManager.getPaymanager().getCreditCard()
+					.setTicketID(UUID.fromString(jTextField10.getText()));
+					
+					parkingManager.getPaymanager().getCreditCard()
+							.setExpiryDate(jTextField6.getText());
+					
+					parkingManager.getPaymanager().getCreditCard().setCvvNumber(
+									Integer.parseInt(jTextField7.getText()));
+
+					// Date is set outside
+
+					Double dueAmount = Double.parseDouble(label10.getText());
+
+					parkingManager.getPaymanager().getCreditCard().setAmount(dueAmount);
+					
+					paymentContext  context=new paymentContext();
+					
+					//parkingManager.processPayment(parkingManager.ticket, parkingManager.getPaymanager().getCreditCard());
+
+			     	context.setPaymentStrategy(new CreditCardStrategy());   
+					        
+			     	
+			    	Double  amount = context.Pay(parkingManager.ticket, parkingManager.getPaymanager().getCreditCard(), parkingManager.getPaymanager());
+			    	
+			    	
+					if (amount == 0)
+						status = new Status(true, "payment has been succesful");
+
+
+					jTextField8.setText(status.getMessage());
+				}
+
 			}
 
-			if (validentry && error.size() < 1) {
+			if (isCashPay) {
+				
+				paymentContext  context=new paymentContext();
+				
+				context.setPaymentStrategy(new CashPayStrategy()); 
+				
+				Double  amount = context.Pay(parkingManager.ticket, null,parkingManager.getPaymanager());
+							 
+				//double amount = parkingManager.processPayment(parkingManager.ticket, null);
 
-				parkingManager.getPaymanager()
-						.getCreditCard()
-						.setCCNumner(jTextField4.getText());
-				parkingManager.getPaymanager()
-						.getCreditCard()
-						.setExpiryDate(jTextField6.getText());
-				parkingManager.getPaymanager()
-						.getCreditCard()
-						.setCvvNumber(Integer.parseInt(jTextField7
-								.getText()));
+				if (amount == 0)
+					status = new Status(true, "payment has been succesful");
 
-				double amount = parkingManager.processPayment(
-						parkingManager.ticket,
-						parkingManager.getPaymanager()
-								.getCreditCard());
-
-				String strAmount = String.valueOf(amount);
-
-				jTextField5.setText(strAmount);
+				jTextField8.setText(status.getMessage());
 			}
-		} catch (Exception ex) {
+
+		}
+
+		catch (Exception ex) {
 
 		}
 
