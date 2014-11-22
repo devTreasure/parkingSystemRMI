@@ -156,8 +156,30 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
-	private void closeGateActionPerformed(
-			java.awt.event.ActionEvent evt) {
+    
+    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        // TODO add your handling code here:
+    }                                       
+
+    private void checkbox2ItemStateChanged(java.awt.event.ItemEvent evt) {                                           
+        // TODO add your handling code here:
+    	//JOptionPane.showMessageDialog(null,"Please enter date MM/dd/yy ");
+  
+		
+    	
+    	if(checkbox2.getState())
+    	{
+    	  	jButton6.setEnabled(true);
+    	}
+    	else
+    	{
+    	  	jButton6.setEnabled(false);
+    	}
+    	
+  
+    }  
+	
+	private void closeGateActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			parkingManager.getGatemanagement()
 					.closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
