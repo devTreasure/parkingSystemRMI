@@ -188,8 +188,64 @@ public class parkingGUI extends JFrame implements Serializable {
 		}
 	}
 
-	private void entrygateClosingActionPerformed(
-			java.awt.event.ActionEvent evt) {
+	
+	private Date setTheHourTimeSimulation()
+	{
+	  	
+    	String stDate = JOptionPane.showInputDialog("Enter Date Input: mm/dd/yy");
+    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+    	
+    	Date d1=null;
+    	
+		try {
+			
+			d1= sdf.parse(stDate);
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		Calendar  c= Calendar.getInstance();
+		
+		JOptionPane.showMessageDialog(null,"Please enter date MM/dd/yy ");
+		
+		
+	    	String hour = JOptionPane.showInputDialog("Enter Hour/Minute Input  :  (HH/mm) Format");
+	    	
+	    	
+	    	String[] hrArray=hour.split(":");
+	    	
+	    	int hourInput  =   Integer.parseInt(hrArray[0]);
+	    	int minuteInput  = Integer.parseInt(hrArray[1]);
+	    	
+		     if( hourInput>25  ||  hourInput<0)
+		     {
+		    	    JOptionPane.showMessageDialog(null,"Please entervalid hours");
+		     }
+		     else
+		     {
+		    	 	//d1.setHours(hourInput);
+		     }
+		     
+		     
+		     if(minuteInput>61 || minuteInput< 0 )
+		     {
+		    	 JOptionPane.showMessageDialog(null,"Please enter valid minutes");
+		     }
+		     else
+		     {
+		    	  
+				  d1.setMinutes(minuteInput);
+		     }
+		     
+		     
+		      return  d1;
+		     
+		    
+	}
+	private void entrygateClosingActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
 
