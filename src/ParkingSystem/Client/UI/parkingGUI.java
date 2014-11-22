@@ -1,8 +1,11 @@
 package ParkingSystem.Client.UI;
 
+import java.awt.Choice;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.WindowEvent;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -22,15 +25,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import ParkingSystem.Common.IparkingSystemManager;
+import ParkingSystem.Entities.CashPayStrategy;
+import ParkingSystem.Entities.CreditCard;
+import ParkingSystem.Entities.CreditCardStrategy;
 import ParkingSystem.Entities.EntryGate;
 import ParkingSystem.Entities.GateStatus;
-import ParkingSystem.Entities.HourlyData;
 import ParkingSystem.Entities.ParkingStatus;
 import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Entities.TicketStatus;
-import ParkingSystem.Server.ParkingSystemServer;
+import ParkingSystem.Entities.paymentContext;
+import ParkingSystem.Reports.DailyReport;
+import ParkingSystem.Reports.HourlyData;
+import ParkingSystem.Reports.HourlyReport;
+import ParkingSystem.Reports.ReportCollection;
 import ParkingSystem.controller.ParkingSystemManager;
 
 public class parkingGUI extends JFrame implements Serializable {
@@ -38,7 +47,7 @@ public class parkingGUI extends JFrame implements Serializable {
 	javax.swing.JButton btnReport;
 	java.awt.Choice choiseReport;
 
-	public javax.swing.JButton buttonPrintTicket;
+	javax.swing.JButton buttonPrintTicket;
 	javax.swing.JButton buttonPayment;
 	javax.swing.JButton buttonExit;
 	javax.swing.JButton buttonOpenGate;
@@ -47,10 +56,10 @@ public class parkingGUI extends JFrame implements Serializable {
 	javax.swing.JLabel jLabel1;
 	javax.swing.JTextField jTextField1;
 	javax.swing.JTextField jTextField2;
-	public javax.swing.JTextField jTextField3;
+	javax.swing.JTextField jTextField3;
 	javax.swing.JLabel jLabel3;
 	javax.swing.JLabel jLabel2;
-	public javax.swing.JLabel jLabel4;
+	javax.swing.JLabel jLabel4;
 	javax.swing.JLabel jLabel5;
 	javax.swing.JLabel jLabel6;
 	javax.swing.JLabel jLabel7;
@@ -61,22 +70,26 @@ public class parkingGUI extends JFrame implements Serializable {
 	javax.swing.JLabel jLabel12;
 	javax.swing.JLabel jLabel14;
 	javax.swing.JLabel jLabel15;
-	public javax.swing.JTextField jTextField4;
-	public javax.swing.JTextField jTextField5;
-	public javax.swing.JTextField jTextField6;
-	public javax.swing.JTextField jTextField7;
+	java.awt.TextField textField3;
+	java.awt.TextField textField1;
+	javax.swing.JTextField jTextField4;
+	javax.swing.JTextField jTextField5;
+	javax.swing.JTextField jTextField6;
+	javax.swing.JTextField jTextField7;
+	javax.swing.JTextField jTextField13;
 	javax.swing.JLabel jLabel13;
 	javax.swing.JTextField jTextField8;
 	javax.swing.JTextField jTextField9;
-	public javax.swing.JTextField jTextField10;
-	public javax.swing.JTextField jTextField11;
-	public javax.swing.JTextField jTextField12;
+	javax.swing.JTextField jTextField10;
+	javax.swing.JTextField jTextField11;
+	javax.swing.JTextField jTextField12;
 	java.awt.Label label1;
 	java.awt.Label label2;
 	java.awt.Label label3;
 	java.awt.Label label4;
-	public java.awt.Label label5;
+	java.awt.Label label5;
 	java.awt.Label label6;
+	java.awt.Label label11;
 	javax.swing.JButton buttonGate1;
 	javax.swing.JButton buttonGate3;
 	javax.swing.JButton buttonGate2;
@@ -85,46 +98,57 @@ public class parkingGUI extends JFrame implements Serializable {
 	javax.swing.JButton jButton4;
 	javax.swing.JButton jButton1;
 	javax.swing.JButton jButton2;
+	java.awt.Label label10;
+	javax.swing.JButton jButton5;
+	java.awt.Button button1;
+	java.awt.Label label7;
+	java.awt.Label label8;
+	java.awt.Label label9;
+	java.awt.Checkbox checkbox2;
+	java.awt.TextField textField2;
+	javax.swing.JButton jButton6;
+	private java.awt.Checkbox checkbox1;
 	public java.awt.Choice choice1;
 
-	ParkingSystemManager parkingManager = null;// new
-				// ParkingSystemManager();
+	ParkingSystemManager parkingManager = null;
+	
+	boolean isCreditpay;
+	boolean isCashPay;
 
-	private void openGateActionPerformed(
-			java.awt.event.ActionEvent evt) {
+	private void openGateActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
 
 			if (parkingManager.ticket.getTicektStatus() == TicketStatus.Active) {
 				parkingManager.getGatemanagement().gate = parkingManager
-						.getGatemanagement()
-						.OpenEntryGate(parkingManager.getGatemanagement().gate.GateId);
+						.getGatemanagement().OpenEntryGate(
+								parkingManager.getGatemanagement().gate.GateId);
 
 				// added for fraud
 				// prevention check
-				parkingManager.getFraudManager().ticketgatecollection
-						.put(parkingManager.ticket,
-								parkingManager.getGatemanagement().gate);
+				parkingManager.getFraudManager().ticketgatecollection.put(
+						parkingManager.ticket,
+						parkingManager.getGatemanagement().gate);
 
-				jTextField3.setText(parkingManager
-						.getGatemanagement().gate.gateStatus
-						.toString());
+				jTextField3
+						.setText(parkingManager.getGatemanagement().gate.gateStatus
+								.toString());
 
 				if (parkingManager.getGatemanagement().gate.gateStatus == GateStatus.Open) {
 					// objticketmanager.getGatemanagement().gate
 					// =
 					// objticketmanager.getGatemanagement().closeEntryGate(objticketmanager.getGatemanagement().gate.GateId);
-					parkingManager.getGatemanagement()
-							.closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+					parkingManager.getGatemanagement().closeEntryGate(
+							parkingManager.getGatemanagement().gate.GateId);
 				}
-				jTextField3.setText(parkingManager
-						.getGatemanagement().gate.gateStatus
-						.toString());
+				jTextField3
+						.setText(parkingManager.getGatemanagement().gate.gateStatus
+								.toString());
 
 			} else {
-				jTextField3.setText(parkingManager
-						.getGatemanagement().gate.gateStatus
-						.toString());
+				jTextField3
+						.setText(parkingManager.getGatemanagement().gate.gateStatus
+								.toString());
 			}
 		} catch (Exception ex) {
 
