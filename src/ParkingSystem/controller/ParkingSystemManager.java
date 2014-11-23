@@ -10,7 +10,6 @@ import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
-
 import ParkingSystem.Common.IparkingSystemManager;
 
 public class ParkingSystemManager   extends java.rmi.server.UnicastRemoteObject
@@ -29,6 +28,7 @@ implements IparkingSystemManager, Serializable  {
 	private FraudPreventionManagement fraudManager = new FraudPreventionManagement();
 	private ReportManagement reportManagement = new ReportManagement(ticketmager);
   
+    
 	public Ticket ticket;
 
 	public ParkingSystemManager() 
@@ -158,24 +158,77 @@ implements IparkingSystemManager, Serializable  {
 
 	}
 
+	//Strategy has been implemented so this method is refactored
+	
 	public double processPayment(Ticket ticket, CreditCard card)  throws RemoteException {
 
-
 		// associating ticket id to credit card id
+		Status  status=null;
+		
+		if(card!=null)
+		{
 		this.paymanager.getCreditCard().setTicketID(ticket.getTicektID());
 
 		if (fraudManager.isValidTicket(ticket))
-			this.paymanager.processForParkingFeePayment(ticket, card);
+			status=this.paymanager.processForParkingFeePayment(ticket, card);
+		}
+		else
+		{
+		 if (fraudManager.isValidTicket(ticket))
+			 status=this.paymanager.processCashForParkingFeePayment(ticket);
+		}
 
 		double ticektAmount = ticket.getTicketAmount();
 
 		return ticektAmount;
 	}
+	
+	
+	
 
 	@Override
 	public void PerformFareProcessment() throws RemoteException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Ticket findTicket(String namePlate) {
+		// TODO Auto-generated method stub
+		
+		//Ticket t=  ticketmager.getTicketcollection().contains(t.getNamePlate()==namePlate);
+		Ticket foundTicket=null;
+	
+		for(Ticket t: ticketmager.getTicketcollection())
+		{
+			if(t.getNamePlate().equals(namePlate))
+			{
+				foundTicket=t;
+			}
+		}
+		
+		return foundTicket;
+	}
+
+	
+	
+	
+	public Ticket findTicketFromID(String ticketID) {
+		// TODO Auto-generated method stub
+		
+		//Ticket t=  ticketmager.getTicketcollection().contains(t.getNamePlate()==namePlate);
+		Ticket foundTicket=null;
+		
+		UUID  tid= UUID.fromString(ticketID);
+	
+		for(Ticket t: ticketmager.getTicketcollection())
+		{
+			if(t.getTicektID().compareTo(tid)==0)
+			{
+				foundTicket=t;
+			}
+		}
+		
+		return foundTicket;
 	}
 
 	
