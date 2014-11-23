@@ -1,52 +1,72 @@
 package ParkingSystem.Entities;
 
-import java.util.Calendar;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
-import ParkingSystem.controller.PaymentManagement;
+public class CreditCard  implements Serializable{
 
-public class CashPayStrategy implements paymentStratagy {
-	
-	PaymentManagement payManager= new PaymentManagement();
-
-	@Override
-	public double pay(Ticket ticket, CreditCard card,PaymentManagement paymanager) {
-		// TODO Auto-generated method stub
-		//creditcollection.add(card);
-		Status isSuccessful=null;
-		
-		Calendar  cal= Calendar.getInstance();
-		
-		Date paymentdate=cal.getTime();
-		
-	    Cash objCash=new Cash();
-	    
-	    objCash.setPaymentDate(paymentdate);
-	    
-	   // if(ticket.amount>0)
-	   //   objCash.setAmount(amount);
-	    
-		if (ticket.getTicketAmount() > 0)
-		{
-			objCash.setTicketID(ticket.getTicektID());
-			objCash.setAmount(ticket.getTicketAmount());
-			
-			
-			
-			payManager.setCashPaymentcollection(objCash);			
-			//Boolean isSuccessfull=true;
-			//isSuccessful = new Status(true, "Payment has been successful");
-			
-			//Boolean isSuccessfull = transactionManager.ProcessTheTransaction(card);
-		}
-		
-		ticket.setTicketAmount(0);// amount paid and due is set 0
-
-		ticket.setIsPaid(true);
-		
-		//return isSuccessful;
-	
-		return 0;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String CCNumner;
+	private String expiryDate;
+	private int cvvNumber;
+    private double amount;
+    private Date creditcardpaymentTime;
+    
+	public double getAmount() {
+		return amount;
 	}
 
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	private UUID ticketID;
+
+	public CreditCard() {
+
+	}
+
+	public String getCCNumner() {
+		return CCNumner;
+	}
+
+	public void setCCNumner(String cCNumner) {
+		CCNumner = cCNumner;
+	}
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public int getCvvNumber() {
+		return cvvNumber;
+	}
+
+	public void setCvvNumber(int cvvNumber) {
+		this.cvvNumber = cvvNumber;
+	}
+
+	public UUID getTicketID() {
+		return ticketID;
+	}
+
+	public void setTicketID(UUID ticketID) {
+		this.ticketID = ticketID;
+	}
+
+	public Date getCreditcardpaymentTime() {
+		return creditcardpaymentTime;
+	}
+
+	public void setCreditcardpaymentTime(Date creditcardpaymentTime) {
+		this.creditcardpaymentTime = creditcardpaymentTime;
+	}
 }
