@@ -16,7 +16,8 @@ public class GateManagement implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Map<Integer, Gate> gateMovementcollection = new HashMap<Integer, Gate>();
+	private Map<Integer, Gate> entryGatecollection = new HashMap<Integer, Gate>();
+	private Map<Integer, Gate> exitGatecollection = new HashMap<Integer, Gate>();
 
 	// No gate assigned initially
 	public Gate gate = new Gate(0);
@@ -27,10 +28,10 @@ public class GateManagement implements Serializable {
 
 	public Gate OpenEntryGate(int gateid) {
 
-		Gate entryGate = gateMovementcollection.get(gateid);
+		Gate entryGate = entryGatecollection.get(gateid);
 		if (entryGate == null) {
 			entryGate = new EntryGate(gateid);
-			gateMovementcollection.put(gateid, entryGate);
+			entryGatecollection.put(gateid, entryGate);
 		}
 
 		entryGate.gateStatus = GateStatus.Open;
@@ -39,10 +40,10 @@ public class GateManagement implements Serializable {
 
 	public Gate closeEntryGate(int gateid) {
 
-		Gate entryGate = gateMovementcollection.get(gateid);
+		Gate entryGate = entryGatecollection.get(gateid);
 		if (entryGate == null) {
 			entryGate = new EntryGate(gateid);
-			gateMovementcollection.put(gateid, entryGate);
+			entryGatecollection.put(gateid, entryGate);
 		}
 
 		entryGate.gateStatus = GateStatus.Close;
@@ -51,10 +52,10 @@ public class GateManagement implements Serializable {
 	}
 
 	public Gate openExitGate(int gateid) {
-		Gate exitGate = gateMovementcollection.get(gateid);
+		Gate exitGate = exitGatecollection.get(gateid);
 		if (exitGate == null) {
 			exitGate = new ExitGate(gateid);
-			gateMovementcollection.put(gateid, exitGate);
+			exitGatecollection.put(gateid, exitGate);
 		}
 		exitGate.gateStatus = GateStatus.Open;
 		return exitGate;
@@ -62,23 +63,25 @@ public class GateManagement implements Serializable {
 
 	public Gate closeExitGate(int gateid) {
 
-		Gate exitGate = gateMovementcollection.get(gateid);
+		Gate exitGate = exitGatecollection.get(gateid);
 		if (exitGate == null) {
 			exitGate = new ExitGate(gateid);
-			gateMovementcollection.put(gateid, exitGate);
+			exitGatecollection.put(gateid, exitGate);
 		}
-
 		exitGate.gateStatus = GateStatus.Close;
 		return exitGate;
 	}
 
-	public Map<Integer, Gate> getGateMovementcollection() {
-		return gateMovementcollection;
+	public Gate getEntryGate(int gateID) {
+		return entryGatecollection.get(gateID);
 	}
 
-	public void setGateMovementcollection(
-			Map<Integer, Gate> gateMovementcollection) {
-		this.gateMovementcollection = gateMovementcollection;
+	public Gate getExitGate(int gateID) {
+		return exitGatecollection.get(gateID);
+	}
+
+	public Map<Integer, Gate> getGateMovementcollection() {
+		return entryGatecollection;
 	}
 
 }

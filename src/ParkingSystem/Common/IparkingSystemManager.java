@@ -1,14 +1,23 @@
 package ParkingSystem.Common;
 
 import java.rmi.RemoteException;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
 
 
+
+
+
+
 import ParkingSystem.Entities.CreditCard;
+import ParkingSystem.Entities.ParkingStatus;
+import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
+import ParkingSystem.Reports.HourlyData;
 import ParkingSystem.controller.FraudPreventionManagement;
 import ParkingSystem.controller.GateManagement;
 import ParkingSystem.controller.OccupancyManagement;
@@ -37,7 +46,7 @@ public interface IparkingSystemManager extends java.rmi.Remote {
 
 	public Status processExitFor(UUID ticketID) throws RemoteException;
 
-	public void printTicketOperation() throws RemoteException;
+	public Ticket printTicketOperation() throws RemoteException;
 
 	public void PerformFareProcessment() throws RemoteException;
 
@@ -45,12 +54,34 @@ public interface IparkingSystemManager extends java.rmi.Remote {
 
 	public double processPayment(Ticket ticket, CreditCard card) throws RemoteException;
 
-	public Status openEntryGateFor(String currentTicketId, int gateNumber);
+	public Status openEntryGateFor(String currentTicketId, int gateNumber) throws RemoteException;
+	
+	public Status performExitGateOperationFor(String ticketID) throws RemoteException;
 
-	public void initialize(int parkingCapacity, int hourlyRate);
+	public void initialize(int parkingCapacity, int hourlyRate) throws RemoteException;
 
-	public void closeEntryGate(int gateID);
+	public Status closeEntryGate(int gateID) throws RemoteException;
 
 	public Status calculateFare(String ticketID) throws RemoteException;
+	
+	public Ticket getThetheTicketStatusAfterExitOperation(String TicektID) throws RemoteException;
+	
+	public int getTheParkingOccupancy() throws RemoteException;
+	
+	public Boolean isCurrentparkingFull() throws RemoteException;
+	
+	public ParkingStatus getTheCurrentparkingStatus() throws RemoteException;
+	
+	public Ticket getTheTicketfromID(String strID) throws RemoteException;
+	
+	public Ticket getTheTicketFromNamePlate(String nampePlateID) throws RemoteException;
+	
+	public List<HourlyData> getTheDataCollectionforReport(ReportType rptType,Date date) throws RemoteException;
+	
+	public CreditCard  getCreditCard() throws RemoteException;
+	
+	public PaymentManagement  getThePaymanager() throws RemoteException;
+	
+	
 
 }

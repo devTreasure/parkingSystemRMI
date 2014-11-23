@@ -23,10 +23,10 @@ public class ReportManagement implements Serializable {
 		this.ticketManagement = ticketManagement;
 	}
 
-	public List<HourlyData> generateReport(ReportType reportType,
-			List<Ticket> allTickets, Date dt) {
+	public List<HourlyData> generateReport(ReportType reportType, Date dt)
+	{
 		List<Ticket> newallTickets = null;
-		allTickets = ticketManagement.getTicketcollection();
+		List<Ticket> allTickets = ticketManagement.getTicketcollection();
 
 		List<HourlyData> data = null;
 
