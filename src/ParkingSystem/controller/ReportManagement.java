@@ -6,6 +6,8 @@ import java.util.List;
 
 import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Ticket;
+import ParkingSystem.Reports.HourlyData;
+import ParkingSystem.Reports.HourlyReport;
 import ParkingSystem.Reports.ReportCreator;
 
 public class ReportManagement implements Serializable {
@@ -16,29 +18,29 @@ public class ReportManagement implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private TicketManagement ticketManagement;
 
-	public ReportManagement(TicketManagement ticketManagement) {
+	public ReportManagement(TicketManagement ticketManagement)
+	{
 		super();
 		this.ticketManagement = ticketManagement;
 	}
 
-	public List<Ticket> generateReport(ReportType reportType)
+	public List<HourlyData> generateReport(ReportType reportType,	List<Ticket> allTickets,Date dt)
 	{
-		List<Ticket> newallTickets=null;
-		List<Ticket> allTickets = ticketManagement.getTicketcollection();
+		 List<Ticket> newallTickets=null;
+		 allTickets = ticketManagement.getTicketcollection();
 		
-		if(reportType==ReportType.Weekly)
-		{
-			for (Ticket ticket : allTickets) {
-				
+		List<HourlyData> data =null;
+		
+		
+		
+			data= ReportCreator.getReport(reportType).getReport(allTickets,dt);
 			
-				
-				
-			}
-		}
+	
+	
 		
 	
 		
-		List<Ticket> data = ReportCreator.getReport(reportType).getReport(allTickets);
+		
 		return data;
 	}
 	
