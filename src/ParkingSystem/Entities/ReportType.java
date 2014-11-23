@@ -1,8 +1,5 @@
 package ParkingSystem.Entities;
 
 public enum ReportType {
-	Hourly,
-	Daily,
-	Weekly,
-	Monthly
+	Hourly, Daily, Weekly, Monthly
 }

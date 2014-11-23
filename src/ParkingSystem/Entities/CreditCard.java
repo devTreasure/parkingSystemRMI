@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class CreditCard  implements Serializable{
+public class CreditCard implements Serializable {
 
 	/**
 	 * 
@@ -13,9 +13,9 @@ public class CreditCard  implements Serializable{
 	private String CCNumner;
 	private String expiryDate;
 	private int cvvNumber;
-    private double amount;
-    private Date creditcardpaymentTime;
-    
+	private double amount;
+	private Date creditcardpaymentTime;
+
 	public double getAmount() {
 		return amount;
 	}

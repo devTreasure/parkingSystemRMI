@@ -7,7 +7,7 @@ import java.util.List;
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.Ticket;
 
-public class TicketManagement implements Serializable{
+public class TicketManagement implements Serializable {
 
 	/**
 	 * 
@@ -17,26 +17,26 @@ public class TicketManagement implements Serializable{
 	private Ticket ticket;
 
 	private Gate gate;
-	// TODO: review the code for  any tight coupling , use low coupling refactoring.
+	// TODO: review the code for any tight coupling , use low coupling
+	// refactoring.
 
 	private List<Ticket> ticketcollection = new ArrayList<Ticket>();
-	
-	
+
 	public void printTicket() {
 
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public Ticket createTicket() {
-		
+
 		Ticket newTicket = new Ticket();
 		// New ticket added to collection
 		this.ticket = newTicket;
 		ticketcollection.add(ticket);
 		return ticket;
 	}
-	
+
 	public List<Ticket> getTicketcollection() {
 		return ticketcollection;
 	}

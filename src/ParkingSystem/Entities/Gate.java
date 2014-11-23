@@ -15,15 +15,13 @@ public class Gate implements Serializable {
 		this.GateId = gateId;
 
 	}
-	
-	public void openGate()
-	{
-		
+
+	public void openGate() {
+
 	}
-	
-	public void closeGate()
-	{
-		
+
+	public void closeGate() {
+
 	}
 
 }

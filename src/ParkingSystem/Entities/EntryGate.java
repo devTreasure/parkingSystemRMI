@@ -13,7 +13,5 @@ public class EntryGate extends Gate implements Serializable {
 		super(gateid);
 
 	}
-	
-
 
 }

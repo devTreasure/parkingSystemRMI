@@ -8,10 +8,10 @@ import ParkingSystem.Entities.Ticket;
 public class HourlyReport implements Report {
 
 	@Override
-	public List<HourlyData> getReport(List<Ticket> allTickets,Date dt) {
-		
-		List<HourlyData>  hourlyData=null;
-		
+	public List<HourlyData> getReport(List<Ticket> allTickets, Date dt) {
+
+		List<HourlyData> hourlyData = null;
+
 		return hourlyData;
 	}
 

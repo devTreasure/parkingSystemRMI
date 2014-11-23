@@ -14,8 +14,6 @@ public class Ticket implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
-
 	private Gate gate;
 	private Date entryTime;
 	private Date exitTime;
@@ -23,8 +21,9 @@ public class Ticket implements Serializable {
 	private UUID ticketID;
 	private double ticketAmount;
 	private Boolean isPaid;
-    private double parkingDuration;
-    private String namePlate;
+	private double parkingDuration;
+	private String namePlate;
+
 	public Boolean getIsPaid() {
 		return isPaid;
 	}
@@ -38,13 +37,12 @@ public class Ticket implements Serializable {
 		this.ticketID = id;
 		return id;
 	}
-	
-	public String  generatenamepPate()
-	{
-	 
-	  String namePlate= NamePlateGenerator.generateLicensePlate();
-	  return namePlate;
-			
+
+	public String generatenamepPate() {
+
+		String namePlate = NamePlateGenerator.generateLicensePlate();
+		return namePlate;
+
 	}
 
 	public UUID getTicektID() {
@@ -91,8 +89,6 @@ public class Ticket implements Serializable {
 		this.ticektStatus = ticektStatus;
 	}
 
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -174,7 +170,7 @@ public class Ticket implements Serializable {
 
 		this.entryTime = currenttime;
 		this.ticketID = this.generateTicketID();
-		this.namePlate=this.generatenamepPate();
+		this.namePlate = this.generatenamepPate();
 	}
 
 	public void activatetheTicektStatus() {

@@ -2,21 +2,42 @@ package ParkingSystem.Entities;
 
 import ParkingSystem.controller.PaymentManagement;
 
-public class paymentContext {
+public class PaymentContext {
+
+	private paymentStratagy strategy;
 	
-	private paymentStratagy   strategy;
+	private PaymentType paymentType;
 	
 	
-	public void  setPaymentStrategy(paymentStratagy strategy )
-	{
-		this.strategy=strategy;
+
+	public PaymentType getPaymentType() {
+		return paymentType;
 	}
 
-	
-	public double Pay(Ticket t,CreditCard c,PaymentManagement p)
-	{
-		 strategy.pay(t, c, p);
+	public void setPaymentType(PaymentType paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	public void setPaymentStrategy(paymentStratagy strategy) {
+		this.strategy = strategy;
+	}
+
+	public double Pay(Ticket t, CreditCard c, PaymentManagement p) {
+		if(PaymentType.Cash.equals(paymentType))
+		{
+			strategy=new CashPayStrategy();
+		}
+		else if(PaymentType.Credit.equals(paymentType))
+		{
+			strategy=new CreditCardStrategy();
+		}
+		if(strategy!=null)
+		{
+			return strategy.pay(t, c, p);
+			
+		}
 		
-	     return 0;
+
+		throw new RuntimeException("Payment type not set");
 	}
 }

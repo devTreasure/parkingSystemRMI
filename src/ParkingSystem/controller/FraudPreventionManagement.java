@@ -11,7 +11,7 @@ import ParkingSystem.Entities.GateStatus;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Entities.TicketStatus;
 
-public class FraudPreventionManagement  implements Serializable {
+public class FraudPreventionManagement implements Serializable {
 
 	/**
 	 * 
@@ -23,48 +23,40 @@ public class FraudPreventionManagement  implements Serializable {
 	private List<Gate> gatecollection = new ArrayList<Gate>();
 
 	public Map<Ticket, Gate> ticketgatecollection = new HashMap<Ticket, Gate>();
-	
 
 	public FraudPreventionManagement() {
 
 	}
 
-
-
 	public Boolean checkNoExitWithoutPay(Ticket ticket) {
-				
-		if(isValidTicket(ticket)  &&  ticket.getIsPaid())
+
+		if (isValidTicket(ticket) && ticket.getIsPaid())
 			return true;
 		else
 			return true;
 	}
 
-	public Boolean checkNoEntryWithoutTicket(Ticket ticket,Gate g) {
-		
+	public Boolean checkNoEntryWithoutTicket(Ticket ticket, Gate g) {
+
 		Boolean isvalidEntry;
-		
-		if(isValidTicket(ticket))
-		{
-		  g.gateStatus=GateStatus.Open;
-		  isvalidEntry=true;
+
+		if (isValidTicket(ticket)) {
+			g.gateStatus = GateStatus.Open;
+			isvalidEntry = true;
+		} else {
+			g.gateStatus = GateStatus.Close;
+			isvalidEntry = false;
 		}
-		else
-		{
-			  g.gateStatus=GateStatus.Close;
-			  isvalidEntry=false;
-		}
-		
-			
+
 		return isvalidEntry;
 	}
 
-
 	public Boolean isValidTicket(Ticket ticket) {
-		
-		if((ticket != null && ticket.getTicektStatus() == TicketStatus.Active))
+
+		if ((ticket != null && ticket.getTicektStatus() == TicketStatus.Active))
 			return true;
 		else
-		   return false;
+			return false;
 	}
 
 	public List<Ticket> getTicketcollection() {

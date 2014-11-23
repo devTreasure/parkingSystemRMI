@@ -10,27 +10,25 @@ import ParkingSystem.Entities.Ticket;
 public class DailyReport implements Report {
 
 	@Override
-	public List<HourlyData> getReport(List<Ticket> allTickets , Date dt) {
-		
-		List<HourlyData>  dailyCollection = calculateDailyStatistics(allTickets,dt);
+	public List<HourlyData> getReport(List<Ticket> allTickets, Date dt) {
+
+		List<HourlyData> dailyCollection = calculateDailyStatistics(allTickets,	dt);
 		return dailyCollection;
 	}
-	
-	
-	private List<HourlyData> calculateDailyStatistics(List<Ticket> allTickets, Date stDate)
+
+	private List<HourlyData> calculateDailyStatistics(List<Ticket> allTickets,Date stDate) 
 	{
 		List<HourlyData> reportHourly = new ArrayList<HourlyData>();
 		List<HourlyData> exitdata = new ArrayList<HourlyData>();
-		
+
 		SimpleDateFormat hrly = new SimpleDateFormat("MM/dd/yy");
 
-		String strdt=hrly.format(stDate);
-		
-        int k=0;
-		int y=0;
-		
-		while (y <= 11.59) 
-		{
+		String strdt = hrly.format(stDate);
+
+		int k = 0;
+		int y = 0;
+
+		while (y <= 11.59) {
 			HourlyData datacount = null;
 			HourlyData data = null;
 			HourlyData Exitdata = null;
@@ -69,8 +67,7 @@ public class DailyReport implements Report {
 
 					}
 
-					if ((t.getExitTime() != null && t.getExitTime()
-							.getHours() == y)) {
+					if ((t.getExitTime() != null && t.getExitTime().getHours() == y)) {
 
 						if (t.getExitTime().getMinutes() <= 59) {
 							Exitdata = new HourlyData();
@@ -105,11 +102,9 @@ public class DailyReport implements Report {
 
 			y++;
 		}
-		
-		
-		return reportHourly;
-		
-	}
 
+		return reportHourly;
+
+	}
 
 }

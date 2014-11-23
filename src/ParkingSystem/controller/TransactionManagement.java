@@ -34,11 +34,8 @@ public class TransactionManagement implements Serializable {
 			}
 		}
 
-		
 		return status;
 	}
-	
-	
 
 	public TransactionManagement() {
 
@@ -49,10 +46,10 @@ public class TransactionManagement implements Serializable {
 		Boolean validentry = false;
 
 		int currentYear = cal.get(Calendar.YEAR);
-		int  currentMonth = cal.get(Calendar.MONTH)+1;
-		
-        Status status;
-        
+		int currentMonth = cal.get(Calendar.MONTH) + 1;
+
+		Status status;
+
 		String entermonth[] = new String[2];
 
 		try {
@@ -60,29 +57,25 @@ public class TransactionManagement implements Serializable {
 			String[] parts = string.split("/");
 
 			if (parts.length > 0) {
-				
-                int month=Integer.parseInt(parts[0]);
+
+				int month = Integer.parseInt(parts[0]);
 				int year = Integer.parseInt(parts[1]);
 
-				if (year < currentYear) 
-				{
+				if (year < currentYear) {
 					validentry = false;
-				} 
-				if(year>=currentYear)
-				{
-					
-					if(month < currentMonth)
-					{
+				}
+				if (year >= currentYear) {
+
+					if (month < currentMonth) {
 						validentry = false;
 					}
-					if(month>=currentMonth)
-					{
+					if (month >= currentMonth) {
 						validentry = true;
 					}
 				}
-				
+
 			}
-		
+
 		} catch (Exception e) {
 
 		}

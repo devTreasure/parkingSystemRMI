@@ -13,32 +13,30 @@ public class ParkingSystemServer {
 
 	public ParkingSystemServer(String url) throws RemoteException {
 		this.url = url;
-		
+
 		ParkingSystemManager parkingManger = new ParkingSystemManager();
-		
-			try {
-				
+
+		try {
+
 			Naming.rebind(url, parkingManger);
-			
-			} catch (MalformedURLException e) 
-			
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		
+
+		} catch (MalformedURLException e)
+
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
 	public static void main(String[] args) {
-		
+
 		// TODO Auto-generated method stub
-		String url = new String("rmi://" +
-				 args[0] + ":" + args[1] + "/ParkingService"); 
+		String url = new String("rmi://" + args[0] + ":" + args[1]
+				+ "/ParkingService");
 		try {
 			new ParkingSystemServer(url);
-			
+
 			System.out.println("Parking service cliet is running.....");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

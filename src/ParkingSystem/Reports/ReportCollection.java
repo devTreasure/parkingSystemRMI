@@ -5,68 +5,65 @@ import java.util.UUID;
 
 public class ReportCollection {
 
+	private static final long serialVersionUID = 1L;
+	private String CCNumner;
+	private String expiryDate;
+	private int cvvNumber;
+	private double amount;
+	private Date creditcardpaymentTime;
 
+	public double getAmount() {
+		return amount;
+	}
 
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
 
-private static final long serialVersionUID = 1L;
-private String CCNumner;
-private String expiryDate;
-private int cvvNumber;
-private double amount;
-private Date creditcardpaymentTime;
+	private UUID ticketID;
 
-public double getAmount() {
-	return amount;
-}
+	public ReportCollection() {
 
-public void setAmount(double amount) {
-	this.amount = amount;
-}
+	}
 
-private UUID ticketID;
+	public String getCCNumner() {
+		return CCNumner;
+	}
 
-public ReportCollection() {
+	public void setCCNumner(String cCNumner) {
+		CCNumner = cCNumner;
+	}
 
-}
+	public String getExpiryDate() {
+		return expiryDate;
+	}
 
-public String getCCNumner() {
-	return CCNumner;
-}
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
 
-public void setCCNumner(String cCNumner) {
-	CCNumner = cCNumner;
-}
+	public int getCvvNumber() {
+		return cvvNumber;
+	}
 
-public String getExpiryDate() {
-	return expiryDate;
-}
+	public void setCvvNumber(int cvvNumber) {
+		this.cvvNumber = cvvNumber;
+	}
 
-public void setExpiryDate(String expiryDate) {
-	this.expiryDate = expiryDate;
-}
+	public UUID getTicketID() {
+		return ticketID;
+	}
 
-public int getCvvNumber() {
-	return cvvNumber;
-}
+	public void setTicketID(UUID ticketID) {
+		this.ticketID = ticketID;
+	}
 
-public void setCvvNumber(int cvvNumber) {
-	this.cvvNumber = cvvNumber;
-}
+	public Date getCreditcardpaymentTime() {
+		return creditcardpaymentTime;
+	}
 
-public UUID getTicketID() {
-	return ticketID;
-}
-
-public void setTicketID(UUID ticketID) {
-	this.ticketID = ticketID;
-}
-
-public Date getCreditcardpaymentTime() {
-	return creditcardpaymentTime;
-}
-
-public void setCreditcardpaymentTime(Date creditcardpaymentTime) {
-	this.creditcardpaymentTime = creditcardpaymentTime;
-}
+	public void setCreditcardpaymentTime(Date creditcardpaymentTime) {
+		this.creditcardpaymentTime = creditcardpaymentTime;
+	}
 
 }

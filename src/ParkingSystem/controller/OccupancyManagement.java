@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import ParkingSystem.Entities.ParkingStatus;
 
-public class OccupancyManagement  implements Serializable {
+public class OccupancyManagement implements Serializable {
 
 	/**
 	 * 
@@ -27,9 +27,9 @@ public class OccupancyManagement  implements Serializable {
 	}
 
 	public void incrementOcccupancy() {
-		
-		if(!this.isParkingfull() )
-		     this.currentParkingOccupancy += 1;
+
+		if (!this.isParkingfull())
+			this.currentParkingOccupancy += 1;
 	}
 
 	public void decrementOcccupancy() {
@@ -52,7 +52,7 @@ public class OccupancyManagement  implements Serializable {
 	}
 
 	public Boolean isParkingfull() {
-		
+
 		if (this.currentParkingOccupancy < this.parkingCapacity)
 			return false;
 		else

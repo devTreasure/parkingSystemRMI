@@ -76,7 +76,8 @@ public class GateManagement implements Serializable {
 		return gateMovementcollection;
 	}
 
-	public void setGateMovementcollection(Map<Integer, Gate> gateMovementcollection) {
+	public void setGateMovementcollection(
+			Map<Integer, Gate> gateMovementcollection) {
 		this.gateMovementcollection = gateMovementcollection;
 	}
 

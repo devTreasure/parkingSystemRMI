@@ -2,7 +2,7 @@ package ParkingSystem.Entities;
 
 import java.io.Serializable;
 
-public class ExitGate extends Gate implements Serializable{
+public class ExitGate extends Gate implements Serializable {
 
 	/**
 	 * 

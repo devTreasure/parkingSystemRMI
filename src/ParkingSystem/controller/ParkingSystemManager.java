@@ -1,6 +1,5 @@
 package ParkingSystem.controller;
 
-
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Calendar;
@@ -12,56 +11,50 @@ import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Common.IparkingSystemManager;
 
-public class ParkingSystemManager   extends java.rmi.server.UnicastRemoteObject
+public class ParkingSystemManager extends java.rmi.server.UnicastRemoteObject
 
-implements IparkingSystemManager, Serializable  {
+implements IparkingSystemManager, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private GateManagement gatemanagement = new GateManagement();
 	private TicketManagement ticketmager = new TicketManagement();
 	private PaymentManagement paymanager = new PaymentManagement();
 	private OccupancyManagement occupancy = new OccupancyManagement();
 	private FraudPreventionManagement fraudManager = new FraudPreventionManagement();
-	private ReportManagement reportManagement = new ReportManagement(ticketmager);
-  
-    
+	private ReportManagement reportManagement = new ReportManagement(
+			ticketmager);
+
 	public Ticket ticket;
 
-	public ParkingSystemManager() 
-		  throws java.rmi.RemoteException {
-              super();
+	public ParkingSystemManager() throws java.rmi.RemoteException {
+		super();
 	}
 
-	public GateManagement getGatemanagement()  throws RemoteException {
+	public GateManagement getGatemanagement() throws RemoteException {
 		return gatemanagement;
 	}
 
-	public TicketManagement getTicketmager  ()   throws RemoteException
-	{
+	public TicketManagement getTicketmager() throws RemoteException {
 		return ticketmager;
 	}
 
-	public PaymentManagement getPaymanager()  throws RemoteException {
+	public PaymentManagement getPaymanager() throws RemoteException {
 		return paymanager;
 	}
-	
-	
 
-	public FraudPreventionManagement getFraudManager()  throws RemoteException{
+	public FraudPreventionManagement getFraudManager() throws RemoteException {
 		return fraudManager;
 	}
 
-	public OccupancyManagement getOccupancy()  throws RemoteException{
+	public OccupancyManagement getOccupancy() throws RemoteException {
 		return occupancy;
 	}
-	
-	
 
-	public ReportManagement getReportManagement()  throws RemoteException {
+	public ReportManagement getReportManagement() throws RemoteException {
 		return reportManagement;
 	}
 
@@ -73,7 +66,7 @@ implements IparkingSystemManager, Serializable  {
 		this.ticket = ticket;
 	}
 
-	public Status processExitFor(UUID ticketID)   throws RemoteException{
+	public Status processExitFor(UUID ticketID) throws RemoteException {
 
 		Status status = null;
 		Ticket ticket = null;
@@ -84,11 +77,10 @@ implements IparkingSystemManager, Serializable  {
 			// TODO add your handling code here:
 		}
 
-
-		if (fraudManager.checkNoExitWithoutPay(ticket)){
+		if (fraudManager.checkNoExitWithoutPay(ticket)) {
 
 			ticket.deactivatetheTicektStatus();
-          //Exit is only through one exit
+			// Exit is only through one exit
 			Gate g1 = gatemanagement.openExitGate(1);
 
 			fraudManager.ticketgatecollection.put(ticket, g1);
@@ -107,7 +99,7 @@ implements IparkingSystemManager, Serializable  {
 		return status;
 	}
 
-	public void printTicketOperation()  throws RemoteException {
+	public void printTicketOperation() throws RemoteException {
 
 		// TODO add your handling code here:
 
@@ -141,15 +133,12 @@ implements IparkingSystemManager, Serializable  {
 
 	}
 
+	public void calculateFare(Ticket ticket) throws RemoteException {
 
-
-	public void calculateFare(Ticket ticket)  throws RemoteException {
-		
 		Calendar c = Calendar.getInstance();
 
 		java.util.Date currenttime = c.getTime();
 
-	
 		ticket.setExitTime(currenttime);
 
 		Double rate = paymanager.calculateParkingDuration(ticket);
@@ -158,81 +147,69 @@ implements IparkingSystemManager, Serializable  {
 
 	}
 
-	//Strategy has been implemented so this method is refactored
-	
-	public double processPayment(Ticket ticket, CreditCard card)  throws RemoteException {
+	// Strategy has been implemented so this method is refactored
+
+	public double processPayment(Ticket ticket, CreditCard card)
+			throws RemoteException {
 
 		// associating ticket id to credit card id
-		Status  status=null;
-		
-		if(card!=null)
-		{
-		this.paymanager.getCreditCard().setTicketID(ticket.getTicektID());
+		Status status = null;
 
-		if (fraudManager.isValidTicket(ticket))
-			status=this.paymanager.processForParkingFeePayment(ticket, card);
-		}
-		else
-		{
-		 if (fraudManager.isValidTicket(ticket))
-			 status=this.paymanager.processCashForParkingFeePayment(ticket);
+		if (card != null) {
+			this.paymanager.getCreditCard().setTicketID(ticket.getTicektID());
+
+			if (fraudManager.isValidTicket(ticket))
+				status = this.paymanager.processForParkingFeePayment(ticket,
+						card);
+		} else {
+			if (fraudManager.isValidTicket(ticket))
+				status = this.paymanager
+						.processCashForParkingFeePayment(ticket);
 		}
 
 		double ticektAmount = ticket.getTicketAmount();
 
 		return ticektAmount;
 	}
-	
-	
-	
 
 	@Override
 	public void PerformFareProcessment() throws RemoteException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public Ticket findTicket(String namePlate) {
 		// TODO Auto-generated method stub
-		
-		//Ticket t=  ticketmager.getTicketcollection().contains(t.getNamePlate()==namePlate);
-		Ticket foundTicket=null;
-	
-		for(Ticket t: ticketmager.getTicketcollection())
-		{
-			if(t.getNamePlate().equals(namePlate))
-			{
-				foundTicket=t;
+
+		// Ticket t=
+		// ticketmager.getTicketcollection().contains(t.getNamePlate()==namePlate);
+		Ticket foundTicket = null;
+
+		for (Ticket t : ticketmager.getTicketcollection()) {
+			if (t.getNamePlate().equals(namePlate)) {
+				foundTicket = t;
 			}
 		}
-		
+
 		return foundTicket;
 	}
 
-	
-	
-	
 	public Ticket findTicketFromID(String ticketID) {
 		// TODO Auto-generated method stub
-		
-		//Ticket t=  ticketmager.getTicketcollection().contains(t.getNamePlate()==namePlate);
-		Ticket foundTicket=null;
-		
-		UUID  tid= UUID.fromString(ticketID);
-	
-		for(Ticket t: ticketmager.getTicketcollection())
-		{
-			if(t.getTicektID().compareTo(tid)==0)
-			{
-				foundTicket=t;
+
+		// Ticket t=
+		// ticketmager.getTicketcollection().contains(t.getNamePlate()==namePlate);
+		Ticket foundTicket = null;
+
+		UUID tid = UUID.fromString(ticketID);
+
+		for (Ticket t : ticketmager.getTicketcollection()) {
+			if (t.getTicektID().compareTo(tid) == 0) {
+				foundTicket = t;
 			}
 		}
-		
+
 		return foundTicket;
 	}
-
-	
-
-
 
 }
