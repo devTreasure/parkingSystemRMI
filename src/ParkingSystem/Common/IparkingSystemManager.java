@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.util.UUID;
 
 
+
+
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
@@ -14,22 +16,22 @@ import ParkingSystem.controller.PaymentManagement;
 import ParkingSystem.controller.ReportManagement;
 import ParkingSystem.controller.TicketManagement;
 
-public interface IparkingSystemManager    extends java.rmi.Remote {
+public interface IparkingSystemManager extends java.rmi.Remote {
 
 
-	public GateManagement getGatemanagement() throws RemoteException;
-
-	public TicketManagement getTicketmager() throws RemoteException;
-
-	public PaymentManagement getPaymanager() throws RemoteException;
-
-	public FraudPreventionManagement getFraudManager() throws RemoteException;
-
-	public OccupancyManagement getOccupancy() throws RemoteException;
-
-	public ReportManagement getReportManagement() throws RemoteException;
-
-	public Ticket getTicket() throws RemoteException;
+//	public GateManagement getGatemanagement() throws RemoteException;
+//
+//	public TicketManagement getTicketmager() throws RemoteException;
+//
+//	public PaymentManagement getPaymanager() throws RemoteException;
+//
+//	public FraudPreventionManagement getFraudManager() throws RemoteException;
+//
+//	public OccupancyManagement getOccupancy() throws RemoteException;
+//
+//	public ReportManagement getReportManagement() throws RemoteException;
+//
+//	public Ticket getTicket() throws RemoteException;
 
 	public void setTicket(Ticket ticket) throws RemoteException;
 
@@ -42,5 +44,13 @@ public interface IparkingSystemManager    extends java.rmi.Remote {
 	public void calculateFare(Ticket ticket) throws RemoteException;
 
 	public double processPayment(Ticket ticket, CreditCard card) throws RemoteException;
+
+	public Status openEntryGateFor(String currentTicketId, int gateNumber);
+
+	public void initialize(int parkingCapacity, int hourlyRate);
+
+	public void closeEntryGate(int gateID);
+
+	public Status calculateFare(String ticketID) throws RemoteException;
 
 }

@@ -7,8 +7,10 @@ import java.util.UUID;
 
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Gate;
+import ParkingSystem.Entities.GateStatus;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
+import ParkingSystem.Entities.TicketStatus;
 import ParkingSystem.Common.IparkingSystemManager;
 
 public class ParkingSystemManager extends java.rmi.server.UnicastRemoteObject
@@ -34,27 +36,27 @@ implements IparkingSystemManager, Serializable {
 		super();
 	}
 
-	public GateManagement getGatemanagement() throws RemoteException {
+	public GateManagement getGatemanagement() {
 		return gatemanagement;
 	}
 
-	public TicketManagement getTicketmager() throws RemoteException {
+	public TicketManagement getTicketmager() {
 		return ticketmager;
 	}
 
-	public PaymentManagement getPaymanager() throws RemoteException {
+	public PaymentManagement getPaymanager() {
 		return paymanager;
 	}
 
-	public FraudPreventionManagement getFraudManager() throws RemoteException {
+	public FraudPreventionManagement getFraudManager() {
 		return fraudManager;
 	}
 
-	public OccupancyManagement getOccupancy() throws RemoteException {
+	public OccupancyManagement getOccupancy() {
 		return occupancy;
 	}
 
-	public ReportManagement getReportManagement() throws RemoteException {
+	public ReportManagement getReportManagement() {
 		return reportManagement;
 	}
 
@@ -210,6 +212,63 @@ implements IparkingSystemManager, Serializable {
 		}
 
 		return foundTicket;
+	}
+
+	//TODO Can be re-named to allowVehicleEntry
+	@Override
+	public Status openEntryGateFor(String currentTicketId, int gateNumber) {
+		
+		String gateStatus = "";
+		Gate gate = null;
+		Ticket currentTicket = findTicketFromID(currentTicketId);
+		if(currentTicket == null && TicketStatus.Active.equals(currentTicket)) {
+			
+			gate = getGatemanagement().OpenEntryGate(gateNumber);
+
+			// added for fraud
+			// prevention check
+			getFraudManager().ticketgatecollection.put(currentTicket, gate);
+
+			//Simulate time to open and close.
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				//Do nothing
+			}
+			
+			if (getGatemanagement().gate.gateStatus == GateStatus.Open) {
+				gate = getGatemanagement().closeEntryGate(gateNumber);
+			}
+			gateStatus = gate.gateStatus.toString(); 
+
+		} else {
+			gateStatus = "Invalid Ticket";
+		}
+		
+		return new Status(true, gateStatus);
+		
+	}
+
+	@Override
+	public void initialize(int parkingCapacity, int hourlyRate) {
+		getOccupancy().setParkingCapacity(parkingCapacity);
+		getPaymanager().setHourlyRate(hourlyRate);
+	}
+
+	@Override
+	public void closeEntryGate(int gateID) {
+		getGatemanagement().closeEntryGate(gateID);
+	}
+
+	@Override
+	public Status calculateFare(String ticketID) throws RemoteException {
+
+		Ticket ticket = findTicketFromID(ticketID);
+
+		calculateFare(ticket);
+
+		Status status = new Status(true, "" + ticket.getTicketAmount());
+		return status;
 	}
 
 }
