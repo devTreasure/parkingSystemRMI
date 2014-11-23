@@ -45,11 +45,15 @@ import ParkingSystem.controller.ParkingSystemManager;
 
 public class parkingGUI extends JFrame implements Serializable {
 
+	/**
+	 * 
+	 */
+
 	javax.swing.JButton btnReport;
 	java.awt.Choice choiseReport;
 	javax.swing.JButton buttonPrintTicket;
 	javax.swing.JButton buttonPayment;
-	
+
 	javax.swing.JButton buttonExit;
 	javax.swing.JButton buttonOpenGate;
 	javax.swing.JButton buttonClosegate;
@@ -115,41 +119,45 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	boolean isCreditpay;
 	boolean isCashPay;
-	int entryGateNumber;
-	
+	int entryGateNumber = 0;
 
 	private void openGateActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
-			
-			//Get ticket id from UI
-			String currentTicketId =choice1.getSelectedItem();
+
+			// Get ticket id from UI
+			String currentTicketId = choice1.getSelectedItem();
 			jTextField3.setText("Opening Gate");
+		
 			Status status = parkingManager.openEntryGateFor(currentTicketId, entryGateNumber);
 			jTextField3.setText(status.getMessage());
-			
-			
-//			if (parkingManager.ticket.getTicektStatus() == TicketStatus.Active) {
-//				parkingManager.getGatemanagement().gate = parkingManager.getGatemanagement().OpenEntryGate(
-//						parkingManager.getGatemanagement().gate.GateId);
-//
-//				// added for fraud
-//				// prevention check
-//				parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket, parkingManager.getGatemanagement().gate);
-//
-//				jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-//
-//				if (parkingManager.getGatemanagement().gate.gateStatus == GateStatus.Open) {
-//					// objticketmanager.getGatemanagement().gate
-//					// =
-//					// objticketmanager.getGatemanagement().closeEntryGate(objticketmanager.getGatemanagement().gate.GateId);
-//					parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
-//				}
-//				jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-//
-//			} else {
-//				jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-//			}
+
+			// if (parkingManager.ticket.getTicektStatus() ==
+			// TicketStatus.Active) {
+			// parkingManager.getGatemanagement().gate =
+			// parkingManager.getGatemanagement().OpenEntryGate(
+			// parkingManager.getGatemanagement().gate.GateId);
+			//
+			// // added for fraud
+			// // prevention check
+			// parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket,
+			// parkingManager.getGatemanagement().gate);
+			//
+			// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+			//
+			// if (parkingManager.getGatemanagement().gate.gateStatus ==
+			// GateStatus.Open) {
+			// // objticketmanager.getGatemanagement().gate
+			// // =
+			// //
+			// objticketmanager.getGatemanagement().closeEntryGate(objticketmanager.getGatemanagement().gate.GateId);
+			// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+			// }
+			// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+			//
+			// } else {
+			// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+			// }
 		} catch (Exception ex) {
 
 		}
@@ -175,7 +183,7 @@ public class parkingGUI extends JFrame implements Serializable {
 	private void closeGateActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			parkingManager.closeEntryGate(entryGateNumber);
-//			parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+			// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
 		} catch (Exception ex) {
 
 		}
@@ -226,29 +234,33 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
-	//TODO DO You need this method? openGateActionPerformed method is doing same thig.
-//	private void entrygateClosingActionPerformed(java.awt.event.ActionEvent evt) {
-//
-//		try {
-//
-//			if (parkingManager.getGatemanagement().gate.gateStatus == GateStatus.Open) {
-//				parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
-//
-//				// ticket with gate
-//				// movement is added
-//				// in collection to
-//				// check
-//				// fraud
-//				// activity
-//
-//				parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket, parkingManager.getGatemanagement().gate);
-//
-//				jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-//			}
-//		} catch (Exception ex) {
-//
-//		}
-//	}
+	// TODO DO You need this method? openGateActionPerformed method is doing
+	// same thig.
+	// private void entrygateClosingActionPerformed(java.awt.event.ActionEvent
+	// evt) {
+	//
+	// try {
+	//
+	// if (parkingManager.getGatemanagement().gate.gateStatus ==
+	// GateStatus.Open) {
+	// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+	//
+	// // ticket with gate
+	// // movement is added
+	// // in collection to
+	// // check
+	// // fraud
+	// // activity
+	//
+	// parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket,
+	// parkingManager.getGatemanagement().gate);
+	//
+	// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+	// }
+	// } catch (Exception ex) {
+	//
+	// }
+	// }
 
 	private void exitActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
@@ -265,20 +277,28 @@ public class parkingGUI extends JFrame implements Serializable {
 			JOptionPane.showMessageDialog(null, exitStatus.getMessage());
 
 			if (exitStatus.getStatus()) {
-				jTextField10.setText(parkingManager.ticket.getTicketID().toString());
-				jTextField11.setText(parkingManager.ticket.getTicektStatus().toString());
-				jTextField12.setText(parkingManager.ticket.getEntryTime().toString());
+
+				Ticket t = parkingManager.getThetheTicketStatusAfterExitOperation(choice1.getSelectedItem());
+
+				jTextField10.setText(t.getTicketID().toString());
+				jTextField11.setText(t.getTicektStatus().toString());
+				jTextField12.setText(t.getEntryTime().toString());
 			}
 
-			parkingManager.getFraudManager().checkentryExitOperation();
+			// parkingManager.getFraudManager().checkentryExitOperation();
 
-			label5.setText(String.valueOf(parkingManager.getOccupancy().currentParkingOccupancy));
+			int parkingOccupancy = parkingManager.getTheParkingOccupancy();
+
+			label5.setText(String.valueOf(parkingOccupancy));
 			// Gate
 			// g=objticketmanager.gatemanagement.ExitGate(1);
 
-			if (parkingManager.getOccupancy().isParkingfull()) {
+			if (parkingManager.isCurrentparkingFull()) {
 				buttonPrintTicket.setVisible(false);
-			} else {
+
+			} else
+
+			{
 
 				buttonPrintTicket.setVisible(true);
 				jTextField2.setText(ParkingStatus.Open.toString());
@@ -434,25 +454,25 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				Calendar c = Calendar.getInstance();
 				Date paymentDt = c.getTime();
-
+				CreditCard card = parkingManager.getCreditCard();
 				// we need to capture failed payments as well?
-				parkingManager.getPaymanager().getCreditCard().setCreditcardpaymentTime(paymentDt);
+				card.setCreditcardpaymentTime(paymentDt);
 
 				if (validentry && error.size() < 1) {
 
-					parkingManager.getPaymanager().getCreditCard().setCCNumner(jTextField4.getText());
+					card.setCCNumner(jTextField4.getText());
 
-					parkingManager.getPaymanager().getCreditCard().setTicketID(UUID.fromString(jTextField10.getText()));
+					card.setTicketID(UUID.fromString(jTextField10.getText()));
 
-					parkingManager.getPaymanager().getCreditCard().setExpiryDate(jTextField6.getText());
+					card.setExpiryDate(jTextField6.getText());
 
-					parkingManager.getPaymanager().getCreditCard().setCvvNumber(Integer.parseInt(jTextField7.getText()));
+					card.setCvvNumber(Integer.parseInt(jTextField7.getText()));
 
 					// Date is set outside
 
 					Double dueAmount = Double.parseDouble(label10.getText());
 
-					parkingManager.getPaymanager().getCreditCard().setAmount(dueAmount);
+					card.setAmount(dueAmount);
 
 					PaymentContext context = new PaymentContext();
 
@@ -462,8 +482,9 @@ public class parkingGUI extends JFrame implements Serializable {
 					// context.setPaymentStrategy(con);
 					context.setPaymentType(PaymentType.Credit);
 
-					Double amount = context.Pay(parkingManager.ticket, parkingManager.getPaymanager().getCreditCard(),
-							parkingManager.getPaymanager());
+					Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
+
+					Double amount = context.Pay(t, card, parkingManager.getThePaymanager());
 
 					if (amount == 0)
 						status = new Status(true, "payment has been succesful");
@@ -474,7 +495,7 @@ public class parkingGUI extends JFrame implements Serializable {
 			}
 
 			if (isCashPay)
-			
+
 			{
 
 				PaymentContext context = new PaymentContext();
@@ -482,7 +503,9 @@ public class parkingGUI extends JFrame implements Serializable {
 				// context.setPaymentStrategy(new CashPayStrategy());
 				context.setPaymentType(PaymentType.Cash);
 
-				Double amount = context.Pay(parkingManager.ticket, null, parkingManager.getPaymanager());
+				Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
+
+				Double amount = context.Pay(t, null, parkingManager.getThePaymanager());
 
 				// double amount =
 				// parkingManager.processPayment(parkingManager.ticket, null);
@@ -504,76 +527,97 @@ public class parkingGUI extends JFrame implements Serializable {
 	public void printTicketActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 
-			if (parkingManager.getOccupancy().isParkingfull()) {
-				parkingManager.getGatemanagement().gate.GateId = 0;
-
-				buttonPrintTicket.setVisible(false);
+			if (parkingManager.isCurrentparkingFull()) {
 			} else {
 
 				buttonPrintTicket.setVisible(true);
 
 			}
 
-			if ((parkingManager.getGatemanagement().gate.GateId == 1 || parkingManager.getGatemanagement().gate.GateId == 2 || parkingManager
-					.getGatemanagement().gate.GateId == 3) && (!parkingManager.getOccupancy().isParkingfull())) {
+			if (entryGateNumber == 1 || entryGateNumber == 2 || entryGateNumber == 3 && (!parkingManager.isCurrentparkingFull()))
+
+			// if ((parkingManager.getGatemanagement().gate.GateId == 1 ||
+			// parkingManager.getGatemanagement().gate.GateId == 2 ||
+			// parkingManager
+			// .getGatemanagement().gate.GateId == 3) &&
+			// (!parkingManager.getOccupancy().isParkingfull()))
+			{
 				jLabel4.setText("Printing Ticket...Please Wait");
 
-				parkingManager.printTicketOperation();
+				Ticket ticket = null;
 
-				ParkingStatus parkingStatus = parkingManager.getOccupancy().currentparkingStatus();
+				ticket = parkingManager.printTicketOperation();
+
+				ParkingStatus parkingStatus = parkingManager.getTheCurrentparkingStatus();
 				jTextField2.setText(parkingStatus.toString());
 
-				jTextField10.setText(parkingManager.ticket.getTicketID().toString());
+				// Ticket ticekt=parkingManager
 
-				jTextField13.setText(parkingManager.ticket.getNamePlate());
+				jTextField10.setText(ticket.getTicketID().toString());
 
-				jTextField11.setText(parkingManager.ticket.getTicektStatus().toString());
-				jTextField12.setText(parkingManager.ticket.getEntryTime().toString());
+				jTextField13.setText(ticket.getNamePlate());
+
+				jTextField11.setText(ticket.getTicektStatus().toString());
+				jTextField12.setText(ticket.getEntryTime().toString());
 
 				jLabel4.setText("Success..Collect the ticket");
 
-				String currentCount = Integer.toString(parkingManager.getOccupancy().currentParkingOccupancy);
+				String currentCount = Integer.toString(parkingManager.getTheParkingOccupancy());
 
 				label5.setText(currentCount);
-
-				if (parkingManager.ticket.getTicektStatus() == TicketStatus.Active) {
-					parkingManager.getGatemanagement().gate = parkingManager.getGatemanagement().OpenEntryGate(
-							parkingManager.getGatemanagement().gate.GateId);
-
-					// added
-					// for
-					// fraud
-					// prevention
-					// check
-
-					parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket,
-							parkingManager.getGatemanagement().gate);
-
+				Status status = null;
+				if (ticket.getTicektStatus() == TicketStatus.Active) {
+					// parkingManager.getGatemanagement().gate =
+					// parkingManager.getGatemanagement().OpenEntryGate(parkingManager.getGatemanagement().gate.GateId);
+					String ticketID =   ticket.getTicektID().toString();
+							//choice1.getSelectedItem();
+					
+					jTextField3.setText("Opening");
+					
+					status = parkingManager.openEntryGateFor(ticketID, entryGateNumber);
 					JOptionPane.showMessageDialog(null, "Gate is Opened");
+
 					JOptionPane.showMessageDialog(null, "Succesful Entry");
 
-					jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+					status=parkingManager.closeEntryGate(entryGateNumber);
+					jTextField3.setText(status.getMessage());
+					
+		
+					// parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket,parkingManager.getGatemanagement().gate);
 
-					if (parkingManager.getGatemanagement().gate.gateStatus == GateStatus.Open) {
+					
+					// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+					//jTextField3.setText(status.getMessage());
 
-						parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+					//if (status.getMessage().equals(GateStatus.Open.toString()))
+
+					// if (parkingManager.getGatemanagement().gate.gateStatus ==
+					// GateStatus.Open)
+
+					//{
+						//parkingManager.closeEntryGate(entryGateNumber);
+
+						// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
 						JOptionPane.showMessageDialog(null, "Gate closed");
 
-						parkingManager.getGatemanagement().gate.GateId = 0;
-					}
+						// parkingManager.getGatemanagement().gate.GateId = 0;
+						entryGateNumber = 0;
+					//}
 
-					if (parkingManager.ticket != null && parkingManager.ticket.getTicektStatus() == TicketStatus.Active) {
-						choice1.add(parkingManager.ticket.getTicketID().toString());
+					if (ticket != null && ticket.getTicektStatus() == TicketStatus.Active) {
+						choice1.add(ticket.getTicketID().toString());
 					}
 
 					else {
 						jLabel4.setText("Error...Please Retry");
 					}
 
-					jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+					jTextField3.setText(status.toString());
 
-				} else {
-					jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
+				} else if (status.equals("Invalid Ticket")) {
+					jTextField3.setText("Closed");
+
+					// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
 				}
 			} else
 
@@ -589,7 +633,7 @@ public class parkingGUI extends JFrame implements Serializable {
 	private void buttonGate1ActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {
 
 		entryGateNumber = 1;
-//		parkingManager.getGatemanagement().gate = new EntryGate(1);
+		// parkingManager.getGatemanagement().gate = new EntryGate(1);
 		JOptionPane.showMessageDialog(null, "Entry gate 1 is Selected, Please print ticket now");
 
 	}
@@ -598,7 +642,7 @@ public class parkingGUI extends JFrame implements Serializable {
 		// TODO add your handling code here:
 
 		entryGateNumber = 2;
-//		parkingManager.getGatemanagement().gate = new EntryGate(2);
+		// parkingManager.getGatemanagement().gate = new EntryGate(2);
 		JOptionPane.showMessageDialog(null, "Entry gate 2 is Selected, Please print ticket now");
 
 	}
@@ -606,12 +650,12 @@ public class parkingGUI extends JFrame implements Serializable {
 	private void buttonGate3ActionPerformed(java.awt.event.ActionEvent evt) throws RemoteException {
 		// TODO add your handling code here:
 		entryGateNumber = 3;
-//		parkingManager.getGatemanagement().gate = new EntryGate(3);
+		// parkingManager.getGatemanagement().gate = new EntryGate(3);
 		JOptionPane.showMessageDialog(null, "Entry gate 3 is Selected, Please print ticket now");
 
 	}
 
-	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
 		JOptionPane.showMessageDialog(null, "Collection Report");
 		String choiceSelection = choiseReport.getSelectedItem();
 		double totalCollection = 0;
@@ -628,7 +672,7 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				dst = hrly.parse(stDate);
 
-				for (ReportCollection c : parkingManager.getPaymanager().getCreditReportcollection()) {
+				for (ReportCollection c : parkingManager.getThePaymanager().getCreditReportcollection()) {
 
 					if (hrly.format(c.getCreditcardpaymentTime()).equals(stDate)) {
 						totalCollection += c.getAmount();
@@ -648,15 +692,13 @@ public class parkingGUI extends JFrame implements Serializable {
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+
 			// List<HourlyData> exitdata = new ArrayList<HourlyData>();
 		}
 	}
 
-	private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {
+	private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
 		// TODO add your handling code here:
 		JOptionPane.showMessageDialog(null, "Date change clicked");
 
@@ -666,7 +708,7 @@ public class parkingGUI extends JFrame implements Serializable {
 		if (!checkbox1.getState()) {
 			String ticketID = choice1.getSelectedItem();
 
-			Ticket t = parkingManager.findTicketFromID(ticketID);
+			Ticket t = parkingManager.getTheTicketfromID(ticketID);
 			if (t != null) {
 				t.setEntryTime(setTheHourTimeSimulation());
 			}
@@ -780,8 +822,7 @@ public class parkingGUI extends JFrame implements Serializable {
 
 			reportType = ReportType.Daily;
 
-			List<HourlyData> reportHourly1 = parkingManager.getReportManagement().generateReport(reportType,
-					parkingManager.getTicketmager().getTicketcollection(), dt);
+			List<HourlyData> reportHourly1 = parkingManager.getTheDataCollectionforReport(reportType, dt);
 
 			/*
 			 * 
@@ -945,9 +986,8 @@ public class parkingGUI extends JFrame implements Serializable {
 
 			reportType = ReportType.Weekly;
 
-			List<HourlyData> reportHourly1 = parkingManager.getReportManagement().generateReport(reportType,
-					parkingManager.getTicketmager().getTicketcollection(), dtweekStart);
-
+			List<HourlyData> reportHourly1 = parkingManager.getTheDataCollectionforReport(reportType, dtweekStart);
+			// parkingManager.getTicketmager().getTicketcollection()
 			/*
 			 * 
 			 * 
@@ -1048,7 +1088,7 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
-	private void textField1FocusLost(java.awt.event.FocusEvent evt) {
+	private void textField1FocusLost(java.awt.event.FocusEvent evt) throws Exception {
 		// TODO add your handling code here:
 		String namePlate = "";
 
@@ -1060,7 +1100,7 @@ public class parkingGUI extends JFrame implements Serializable {
 			JOptionPane.showMessageDialog(null, "Please Enter valid Name Plate");
 		}
 
-		Ticket t = parkingManager.findTicket(namePlate);
+		Ticket t = parkingManager.getTheTicketFromNamePlate(namePlate);
 
 		if (t != null) {
 			jTextField10.setText(t.getTicektID().toString());
@@ -1141,38 +1181,39 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	private void calculatefareActionPerformed(java.awt.event.ActionEvent evt) {
 
-
-		
 		try {
-//			String ticketID = null;
-//			Ticket ticket = null;
-//			if ((choice1.getSelectedItem().length() > 25) && (!checkbox1.getState())) {
-//
-//				ticketID = choice1.getSelectedItem();
-//
-//			}
-//
-//			if (checkbox1.getState() && jTextField10.getText().length() > 25) {
-//				ticketID = jTextField10.getText();
-//			}
-//			
-//			
-//						for (Ticket t : parkingManager.getTicketmager().getTicketcollection()) {
-//				if (t.getTicektID().compareTo(UUID.fromString(ticketID)) == 0) {
-//					ticket = t;
-//				}
-//			}
-//
-//			parkingManager.ticket = ticket;
-//
-//			parkingManager.calculateFare(parkingManager.ticket);
-//
-//			label10.setText(Double.toString(parkingManager.ticket.getTicketAmount()));
+			// String ticketID = null;
+			// Ticket ticket = null;
+			// if ((choice1.getSelectedItem().length() > 25) &&
+			// (!checkbox1.getState())) {
+			//
+			// ticketID = choice1.getSelectedItem();
+			//
+			// }
+			//
+			// if (checkbox1.getState() && jTextField10.getText().length() > 25)
+			// {
+			// ticketID = jTextField10.getText();
+			// }
+			//
+			//
+			// for (Ticket t :
+			// parkingManager.getTicketmager().getTicketcollection()) {
+			// if (t.getTicektID().compareTo(UUID.fromString(ticketID)) == 0) {
+			// ticket = t;
+			// }
+			// }
+			//
+			// parkingManager.ticket = ticket;
+			//
+			// parkingManager.calculateFare(parkingManager.ticket);
+			//
+			// label10.setText(Double.toString(parkingManager.ticket.getTicketAmount()));
 
-			//------------
+			// ------------
 			Status status = parkingManager.calculateFare("ticektId");
 			label10.setText(status.getMessage());
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -1441,7 +1482,12 @@ public class parkingGUI extends JFrame implements Serializable {
 
 		textField1.addFocusListener(new java.awt.event.FocusAdapter() {
 			public void focusLost(java.awt.event.FocusEvent evt) {
-				textField1FocusLost(evt);
+				try {
+					textField1FocusLost(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -1470,7 +1516,12 @@ public class parkingGUI extends JFrame implements Serializable {
 		jButton5.setText("View Collection");
 		jButton5.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton5ActionPerformed(evt);
+				try {
+					jButton5ActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -1490,7 +1541,12 @@ public class parkingGUI extends JFrame implements Serializable {
 
 		jButton6.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jButton6ActionPerformed(evt);
+				try {
+					jButton6ActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 
@@ -2091,23 +2147,28 @@ public class parkingGUI extends JFrame implements Serializable {
 
 		jTextField3.setText(GateStatus.Close.toString());
 
-		ParkingStatus parkingStatus = parkingManager.getOccupancy().currentparkingStatus();
+		ParkingStatus parkingStatus = parkingManager.getTheCurrentparkingStatus();
 
 		jTextField2.setText(parkingStatus.toString());
 
 		choice1.addItemListener(new java.awt.event.ItemListener() {
 
 			public void itemStateChanged(java.awt.event.ItemEvent evt) {
-				// TODO Auto-generated method stub
-				choise1ItemStateChanged(evt);
+
+				try {
+					choise1ItemStateChanged(evt);
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
 			}
 
 		});
 
 	}
 
-	protected void choise1ItemStateChanged(ItemEvent evt) {
-		// TODO Auto-generated method stub
+	protected void choise1ItemStateChanged(ItemEvent evt) throws Exception {
+
 		JOptionPane.showMessageDialog(null, "Ticket selcted    :   " + choice1.getSelectedItem());
 
 		jTextField4.setText("");
@@ -2122,7 +2183,7 @@ public class parkingGUI extends JFrame implements Serializable {
 		jTextField11.setText("");
 		jTextField12.setText("");
 
-		Ticket t = parkingManager.findTicketFromID(choice1.getSelectedItem());
+		Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
 
 		if (t != null) {
 			jTextField10.setText(t.getTicektID().toString());
@@ -2162,29 +2223,26 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	public static void main(String[] args) throws InterruptedException, RemoteException, MalformedURLException, NotBoundException {
 
-		IparkingSystemManager iparkingSystemManager =null;
+		IparkingSystemManager iparkingSystemManager = null;
 		parkingGUI objgui = null;
-		
-		if (args.length != 4 ) {
+
+		if (args.length != 4) {
 			String message = "Remote Server IP, port, parking capacity and hourly rate is mandatory";
 			System.out.println(message);
 			System.exit(0);
 		}
-		
-					//p = new ParkingSystemManager();
-		iparkingSystemManager = 
-				(IparkingSystemManager)
-	     			Naming.lookup("rmi://" + args[0] + ":" + args[1]  + "/ParkingService");
+
+		// p = new ParkingSystemManager();
+		iparkingSystemManager = (IparkingSystemManager) Naming.lookup("rmi://" + args[0] + ":" + args[1] + "/ParkingService");
 
 		System.out.println("Remote reference obtained.");
-		
-		
+
 		objgui = new parkingGUI();
 		objgui.parkingManager = iparkingSystemManager;
 
 		objgui.parkingManager.initialize(getIntValue(args[2], 10), getIntValue(args[3], 60));
 		System.out.println("ParkingService server  is running.....");
-		
+
 		// Ensure the gatestatus
 		if (objgui != null) {
 			objgui.IntiliazeWindows();

@@ -37,7 +37,7 @@ public class ParkingSystemServer {
 		try {
 			new ParkingSystemServer(url);
 
-			System.out.println("Parking service cliet is running.....");
+			System.out.println("Parking service Server is running.....");
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,14 +3,21 @@ package ParkingSystem.controller;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+
+import javax.swing.JOptionPane;
 
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.GateStatus;
+import ParkingSystem.Entities.ParkingStatus;
+import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Entities.TicketStatus;
+import ParkingSystem.Reports.HourlyData;
 import ParkingSystem.Common.IparkingSystemManager;
 
 public class ParkingSystemManager extends java.rmi.server.UnicastRemoteObject
@@ -27,8 +34,7 @@ implements IparkingSystemManager, Serializable {
 	private PaymentManagement paymanager = new PaymentManagement();
 	private OccupancyManagement occupancy = new OccupancyManagement();
 	private FraudPreventionManagement fraudManager = new FraudPreventionManagement();
-	private ReportManagement reportManagement = new ReportManagement(
-			ticketmager);
+	private ReportManagement reportManagement = new ReportManagement(ticketmager);
 
 	public Ticket ticket;
 
@@ -101,7 +107,7 @@ implements IparkingSystemManager, Serializable {
 		return status;
 	}
 
-	public void printTicketOperation() throws RemoteException {
+	public Ticket printTicketOperation() throws RemoteException {
 
 		// TODO add your handling code here:
 
@@ -133,6 +139,8 @@ implements IparkingSystemManager, Serializable {
 			ts.start();
 		}
 
+		return ticket;
+
 	}
 
 	public void calculateFare(Ticket ticket) throws RemoteException {
@@ -151,8 +159,7 @@ implements IparkingSystemManager, Serializable {
 
 	// Strategy has been implemented so this method is refactored
 
-	public double processPayment(Ticket ticket, CreditCard card)
-			throws RemoteException {
+	public double processPayment(Ticket ticket, CreditCard card) throws RemoteException {
 
 		// associating ticket id to credit card id
 		Status status = null;
@@ -161,12 +168,10 @@ implements IparkingSystemManager, Serializable {
 			this.paymanager.getCreditCard().setTicketID(ticket.getTicektID());
 
 			if (fraudManager.isValidTicket(ticket))
-				status = this.paymanager.processForParkingFeePayment(ticket,
-						card);
+				status = this.paymanager.processForParkingFeePayment(ticket, card);
 		} else {
 			if (fraudManager.isValidTicket(ticket))
-				status = this.paymanager
-						.processCashForParkingFeePayment(ticket);
+				status = this.paymanager.processCashForParkingFeePayment(ticket);
 		}
 
 		double ticektAmount = ticket.getTicketAmount();
@@ -214,39 +219,34 @@ implements IparkingSystemManager, Serializable {
 		return foundTicket;
 	}
 
-	//TODO Can be re-named to allowVehicleEntry
+	// TODO Can be re-named to allowVehicleEntry
 	@Override
 	public Status openEntryGateFor(String currentTicketId, int gateNumber) {
-		
+
 		String gateStatus = "";
 		Gate gate = null;
 		Ticket currentTicket = findTicketFromID(currentTicketId);
-		if(currentTicket == null && TicketStatus.Active.equals(currentTicket)) {
-			
+		if (currentTicket == null && TicketStatus.Active.equals(currentTicket)) {
+
 			gate = getGatemanagement().OpenEntryGate(gateNumber);
 
 			// added for fraud
 			// prevention check
 			getFraudManager().ticketgatecollection.put(currentTicket, gate);
 
-			//Simulate time to open and close.
+			// Simulate time to open and close.
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				//Do nothing
+				// Do nothing
 			}
-			
-			if (getGatemanagement().gate.gateStatus == GateStatus.Open) {
-				gate = getGatemanagement().closeEntryGate(gateNumber);
-			}
-			gateStatus = gate.gateStatus.toString(); 
 
 		} else {
 			gateStatus = "Invalid Ticket";
 		}
-		
+
 		return new Status(true, gateStatus);
-		
+
 	}
 
 	@Override
@@ -256,8 +256,19 @@ implements IparkingSystemManager, Serializable {
 	}
 
 	@Override
-	public void closeEntryGate(int gateID) {
-		getGatemanagement().closeEntryGate(gateID);
+	public Status closeEntryGate(int gateID) {
+		/*
+		 * if (getGatemanagement().gate.gateStatus == GateStatus.Open) { gate =
+		 * getGatemanagement().closeEntryGate(gateNumber); } gateStatus =
+		 * gate.gateStatus.toString();
+		 */
+		Gate g = getGatemanagement().getEntryGate(gateID);
+		if (g != null && g.gateStatus == GateStatus.Open) {
+			g = getGatemanagement().closeEntryGate(gateID);
+		}
+		
+		return new Status(true, g.gateStatus.toString());
+
 	}
 
 	@Override
@@ -269,6 +280,113 @@ implements IparkingSystemManager, Serializable {
 
 		Status status = new Status(true, "" + ticket.getTicketAmount());
 		return status;
+	}
+
+	@Override
+	public Status performExitGateOperationFor(String ticketID) throws RemoteException {
+		// TODO Auto-generated method stub
+
+		UUID uticketId = null;
+
+		try {
+			uticketId = UUID.fromString(ticketID);
+		} catch (Exception ex) {
+
+		}
+
+		Status exitStatus = processExitFor(uticketId);
+
+		getFraudManager().checkentryExitOperation();
+
+		// label5.setText(String.valueOf(parkingManager.getOccupancy().currentParkingOccupancy));
+		// Gate
+		Gate g = getGatemanagement().openExitGate(1);// getGatemanagement().gatemanagement.ExitGate(1);
+
+		if (getOccupancy().isParkingfull()) {
+			// buttonPrintTicket.setVisible(false);
+
+		} else {
+
+			// buttonPrintTicket.setVisible(true);
+			// jTextField2.setText(ParkingStatus.Open.toString());
+
+		}
+
+		return exitStatus;
+	}
+
+	@Override
+	public Ticket getThetheTicketStatusAfterExitOperation(String TicektID) {
+
+		Ticket t = findTicketFromID(TicektID);
+		return t;
+
+	}
+
+	@Override
+	public int getTheParkingOccupancy() {
+		// TODO Auto-generated method stub
+		int Occupancy = getOccupancy().currentParkingOccupancy;
+
+		return Occupancy;
+	}
+
+	@Override
+	public Boolean isCurrentparkingFull() {
+
+		Boolean isParkingFull;
+
+		isParkingFull = getOccupancy().isParkingfull();
+		// TODO Auto-generated method stub
+		return isParkingFull;
+	}
+
+	@Override
+	public ParkingStatus getTheCurrentparkingStatus() {
+		// TODO Auto-generated method stub
+
+		ParkingStatus parkingStatus = getOccupancy().currentparkingStatus();
+		return parkingStatus;
+	}
+
+	@Override
+	public Ticket getTheTicketfromID(String strID) {
+
+		Ticket t = null;
+		t = getTheTicketfromID(strID);
+		return t;
+
+	}
+
+	@Override
+	public Ticket getTheTicketFromNamePlate(String nampePlateID) {
+		// TODO Auto-generated method stub
+		Ticket t = null;
+		t = findTicket(nampePlateID);
+
+		return t;
+	}
+
+	@Override
+	public List<HourlyData> getTheDataCollectionforReport(ReportType rptType, Date date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CreditCard getCreditCard() {
+
+		CreditCard c = getPaymanager().getCreditCard();
+
+		return null;
+	}
+
+	@Override
+	public PaymentManagement getThePaymanager() {
+		// TODO Auto-generated method stub
+
+		return getPaymanager();
+
 	}
 
 }
