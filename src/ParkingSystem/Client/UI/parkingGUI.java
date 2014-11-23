@@ -47,9 +47,9 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	javax.swing.JButton btnReport;
 	java.awt.Choice choiseReport;
-
 	javax.swing.JButton buttonPrintTicket;
 	javax.swing.JButton buttonPayment;
+	
 	javax.swing.JButton buttonExit;
 	javax.swing.JButton buttonOpenGate;
 	javax.swing.JButton buttonClosegate;
@@ -111,15 +111,35 @@ public class parkingGUI extends JFrame implements Serializable {
 	private java.awt.Checkbox checkbox1;
 	public java.awt.Choice choice1;
 
-	ParkingSystemManager parkingManager = null;
+	IparkingSystemManager parkingManager = null;
 
 	boolean isCreditpay;
 	boolean isCashPay;
+	
 
 	private void openGateActionPerformed(java.awt.event.ActionEvent evt) {
 
 		try {
-
+			
+			
+			parkingManager.openGateFor(currentTicket
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					Id);
 			if (parkingManager.ticket.getTicektStatus() == TicketStatus.Active) {
 				parkingManager.getGatemanagement().gate = parkingManager.getGatemanagement().OpenEntryGate(
 						parkingManager.getGatemanagement().gate.GateId);
@@ -2140,55 +2160,41 @@ public class parkingGUI extends JFrame implements Serializable {
 		return value;
 	}
 
-	public static void main(String[] args) throws InterruptedException, RemoteException, MalformedURLException {
+	public static void main(String[] args) throws InterruptedException, RemoteException, MalformedURLException, NotBoundException {
 
-		ParkingSystemManager p = null;
-
+		IparkingSystemManager iparkingSystemManager =null;
 		parkingGUI objgui = null;
-		try {
-
-			try {
-
-				p = new ParkingSystemManager();
-
-				objgui = new parkingGUI();
-
-				objgui.parkingManager = p;
-
-				System.out.println("ParkingService server  is running.....");
-
-			} catch (ClassCastException e) {
-				e.printStackTrace();
-			}
-
-		} catch (RemoteException re) {
-			System.out.println("RemoteException");
-			System.out.println(re);
-		} catch (java.lang.ArithmeticException ae) {
-			System.out.println("java.lang.ArithmeticException");
-			System.out.println(ae);
+		
+		if (args.length != 4 ) {
+			String message = "Remote Server IP, port, parking capacity and hourly rate is mandatory";
+			System.out.println(message);
+			System.exit(0);
 		}
+		
+					//p = new ParkingSystemManager();
+		iparkingSystemManager = 
+				(IparkingSystemManager)
+	     			Naming.lookup("rmi://" + args[0] + ":" + args[1]  + "/ParkingService");
 
-		if (args.length == 2 && objgui.parkingManager != null) {
+		System.out.println("Remote reference obtained.");
+		
+		
+		objgui = new parkingGUI();
+		objgui.parkingManager = iparkingSystemManager;
 
-			try {
-				objgui.parkingManager.getOccupancy().setParkingCapacity(10);
-			} catch (RemoteException e) {
-				// TODO
-				// Auto-generated
-				// catch block
-				e.printStackTrace();
-			}
-
-			objgui.parkingManager.getPaymanager().setHourlyRate(11);
-		} else {
-
-			if (objgui != null) {
-				objgui.parkingManager.getOccupancy().setParkingCapacity(5);
-
-				objgui.parkingManager.getPaymanager().setHourlyRate(11);
-			}
-		}
+		System.out.println("ParkingService server  is running.....");
+ 
+		
+//		if (args.length == 2 && objgui.parkingManager != null) {
+//
+//			objgui.parkingManager.getOccupancy().setParkingCapacity(10);
+//			objgui.parkingManager.getPaymanager().setHourlyRate(11);
+//		} else if (args.length == 4 && objgui.parkingManager != null) {
+			
+		objgui.parkingManager.getOccupancy().setParkingCapacity(getIntValue(args[2], 10));
+		objgui.parkingManager.getPaymanager().setHourlyRate(getIntValue(args[3], 60));
+			
+//		}
 
 		// Ensure the gatestatus
 		if (objgui != null) {
