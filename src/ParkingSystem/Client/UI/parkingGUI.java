@@ -1142,8 +1142,77 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	}
 
-	private void jButton3ActionPerformed(
-			java.awt.event.ActionEvent evt) {
+	private void textField1FocusLost(java.awt.event.FocusEvent evt) {
+		// TODO add your handling code here:
+		String namePlate = "";
+
+		if (textField1.getText() != "" && textField1.getText().length() == 6) {
+			namePlate = textField1.getText();
+		}
+		
+		else 
+		{
+			JOptionPane.showMessageDialog(null, "Please Enter valid Name Plate");
+		}
+
+		Ticket t = parkingManager.findTicket(namePlate);
+
+		if (t != null) {
+			jTextField10.setText(t.getTicektID().toString());
+			jTextField13.setText(t.getNamePlate());
+			jTextField11.setText(t.getTicektStatus().toString());
+			jTextField12.setText(t.getEntryTime().toString());
+
+		}
+
+	}
+
+	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+
+		isCashPay = false;
+		isCreditpay = true;
+
+		jTextField1.setVisible(false);
+
+		// 170
+
+		// jTextField4.setHorizontalAlignment(170);
+		jTextField4.setVisible(true);
+		jTextField6.setVisible(true);
+		jTextField7.setVisible(true);
+
+		label9.setVisible(false);
+
+		jLabel9.setVisible(true);
+		jLabel11.setVisible(true);
+		jLabel12.setVisible(true);
+
+	}
+
+	protected void payByCashActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+
+		JOptionPane.showMessageDialog(null, "Pay By cash Selected");
+
+		isCashPay = true;
+		isCreditpay = false;
+
+		jLabel9.setVisible(false);
+		label9.setVisible(true);
+		jTextField4.setVisible(false);
+		jTextField6.setVisible(false);
+		jTextField7.setVisible(false);
+		// label4.setVisible(false);
+		jLabel11.setVisible(false);
+		jLabel12.setVisible(false);
+		jTextField1.setVisible(true);
+
+	}
+
+	private void checkbox1ItemStateChanged(java.awt.event.ItemEvent evt) {
+		// TODO add your handling code here:
+		Boolean ischecked;
+		ischecked = checkbox1.getState();
 
 	}
 
