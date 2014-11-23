@@ -1214,6 +1214,24 @@ public class parkingGUI extends JFrame implements Serializable {
 		Boolean ischecked;
 		ischecked = checkbox1.getState();
 
+		if (ischecked) {
+			choice1.setVisible(false);
+			label4.setVisible(false);
+
+		//	label7.setVisible(true);
+			label7.setEnabled(true);
+
+			//textField1.setVisible(true);
+			textField1.setEnabled(true);
+		} else {
+			choice1.setVisible(true);
+			label4.setVisible(true);
+
+			textField1.setEnabled(false);
+			label7.setEnabled(false);
+		}
+
+		System.out.println("Checked? " + ischecked);
 	}
 
 	private void calculatefareActionPerformed(
