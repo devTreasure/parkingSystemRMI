@@ -1234,29 +1234,37 @@ public class parkingGUI extends JFrame implements Serializable {
 		System.out.println("Checked? " + ischecked);
 	}
 
-	private void calculatefareActionPerformed(
-			java.awt.event.ActionEvent evt) {
+	private void calculatefareActionPerformed(java.awt.event.ActionEvent evt) {
+
+		String ticketID = null;
+		Ticket ticket = null;
 		try {
 
-			if (choice1.getSelectedItem()
-					.length() > 25) {
+			if ((choice1.getSelectedItem().length() > 25) && (!checkbox1.getState()))
+			{
 
-				String ticketID = choice1.getSelectedItem();
-				Ticket ticket = null;
-				for (Ticket t : parkingManager.getTicketmager()
-						.getTicketcollection()) {
-					if (t.getTicektID()
-							.compareTo(UUID.fromString(ticketID)) == 0) {
-						ticket = t;
-					}
-				}
+				ticketID = choice1.getSelectedItem();
 
-				parkingManager.ticket = ticket;
-				parkingManager.calculateFare(parkingManager.ticket);
-
-				jTextField5.setText(Double.toString(parkingManager.ticket
-						.getTicketAmount()));
 			}
+
+			if (checkbox1.getState() && jTextField10.getText().length() > 25) 
+			{
+				ticketID = jTextField10.getText();
+			}
+
+			for (Ticket t : parkingManager.getTicketmager().getTicketcollection()) 
+			{
+				if (t.getTicektID().compareTo(UUID.fromString(ticketID)) == 0) {
+					ticket = t;
+				}
+			}
+
+			parkingManager.ticket = ticket;
+
+			parkingManager.calculateFare(parkingManager.ticket);
+
+			label10.setText(Double.toString(parkingManager.ticket.getTicketAmount()));
+
 		} catch (Exception ex) {
 
 		}
