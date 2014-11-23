@@ -19,9 +19,10 @@ public class TransactionManagement implements Serializable {
 
 	CreditPaymentGateWay paymentgateway = new CreditPaymentGateWay();
 
-	public Boolean ProcessTheTransaction(CreditCard card) {
+	public Status ProcessTheTransaction(CreditCard card) {
 
 		Boolean transactionProcessed = false;
+
 		Status status = isvalidCreditCard(card);
 
 		if (status.isSuccessMessage() && card.getAmount() > 0) {
@@ -33,8 +34,11 @@ public class TransactionManagement implements Serializable {
 			}
 		}
 
-		return transactionProcessed;
+		
+		return status;
 	}
+	
+	
 
 	public TransactionManagement() {
 
@@ -45,7 +49,10 @@ public class TransactionManagement implements Serializable {
 		Boolean validentry = false;
 
 		int currentYear = cal.get(Calendar.YEAR);
-
+		int  currentMonth = cal.get(Calendar.MONTH)+1;
+		
+        Status status;
+        
 		String entermonth[] = new String[2];
 
 		try {
@@ -53,17 +60,29 @@ public class TransactionManagement implements Serializable {
 			String[] parts = string.split("/");
 
 			if (parts.length > 0) {
-
+				
+                int month=Integer.parseInt(parts[0]);
 				int year = Integer.parseInt(parts[1]);
 
-				if (year < currentYear) {
-
-				} else {
-					validentry = true;
+				if (year < currentYear) 
+				{
+					validentry = false;
+				} 
+				if(year>=currentYear)
+				{
+					
+					if(month < currentMonth)
+					{
+						validentry = false;
+					}
+					if(month>=currentMonth)
+					{
+						validentry = true;
+					}
 				}
-			} else {
-				// JOptionPane.showMessageDialog(null,"Please enter the date  in mm/YYYY format.");
+				
 			}
+		
 		} catch (Exception e) {
 
 		}
