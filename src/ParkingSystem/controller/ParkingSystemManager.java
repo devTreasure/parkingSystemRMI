@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
+import ParkingSystem.Entities.Cash;
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.GateStatus;
@@ -229,7 +230,7 @@ implements IparkingSystemManager, Serializable {
 		String gateStatus = "";
 		Gate gate = null;
 		Ticket currentTicket = findTicketFromID(currentTicketId);
-		if (currentTicket == null && TicketStatus.Active.equals(currentTicket.getTicektStatus())) {
+		if (currentTicket != null && TicketStatus.Active.equals(currentTicket.getTicektStatus())) {
 
 			gate = getGatemanagement().OpenEntryGate(gateNumber);
 			
@@ -437,9 +438,7 @@ implements IparkingSystemManager, Serializable {
 		// TODO Auto-generated method stub
 		
 		PaymentContext context = new PaymentContext();
-		System.out.print("make payment ");
-		System.out.print("make payment "+ticketId);
-		System.out.print("make payment "+type.toString());
+		
 		context.setPaymentType(type);
 		
 		Ticket theTicketfromID = getTheTicketfromID(ticketId);
@@ -449,6 +448,14 @@ implements IparkingSystemManager, Serializable {
 		context.Pay(theTicketfromID, null, paymanager);
 		
 		return theTicketfromID;
+		
+	}
+
+	@Override
+	public List<Cash> getCashReportcollection() throws RemoteException {
+		
+		return paymanager.getCashPaymentcollection();
+		// TODO Auto-generated method stub
 		
 	}
 

@@ -17,6 +17,8 @@ import java.util.UUID;
 
 
 
+
+import ParkingSystem.Entities.Cash;
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.ParkingStatus;
 import ParkingSystem.Entities.PaymentType;
@@ -88,6 +90,8 @@ public interface IparkingSystemManager extends java.rmi.Remote {
 	public Ticket makePayment(CreditCard card, String ticketId, PaymentType type) throws RemoteException;
 
 	public List<ReportCollection> getCreditReportcollection() throws RemoteException;
+	
+	public List<Cash> getCashReportcollection() throws RemoteException;
 
 	public Ticket makePayment(Double fare, String ticketId, PaymentType type)  throws RemoteException;
 

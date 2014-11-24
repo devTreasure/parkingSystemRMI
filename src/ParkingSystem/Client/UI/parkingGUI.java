@@ -132,32 +132,7 @@ public class parkingGUI extends JFrame implements Serializable {
 			Status status = parkingManager.openEntryGateFor(currentTicketId, entryGateNumber);
 			jTextField3.setText(status.getMessage());
 
-			// if (parkingManager.ticket.getTicektStatus() ==
-			// TicketStatus.Active) {
-			// parkingManager.getGatemanagement().gate =
-			// parkingManager.getGatemanagement().OpenEntryGate(
-			// parkingManager.getGatemanagement().gate.GateId);
-			//
-			// // added for fraud
-			// // prevention check
-			// parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket,
-			// parkingManager.getGatemanagement().gate);
-			//
-			// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-			//
-			// if (parkingManager.getGatemanagement().gate.gateStatus ==
-			// GateStatus.Open) {
-			// // objticketmanager.getGatemanagement().gate
-			// // =
-			// //
-			// objticketmanager.getGatemanagement().closeEntryGate(objticketmanager.getGatemanagement().gate.GateId);
-			// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
-			// }
-			// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-			//
-			// } else {
-			// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-			// }
+		
 		} catch (Exception ex) {
 
 		}
@@ -682,6 +657,9 @@ public class parkingGUI extends JFrame implements Serializable {
 			List<ReportCollection> reportWeekly = new ArrayList<ReportCollection>();
 
 			String stDate = JOptionPane.showInputDialog("Enter start Date Input: MM/dd/yy");
+			
+			if(isCreditpay)
+			{
 
 			try {
 
@@ -704,9 +682,44 @@ public class parkingGUI extends JFrame implements Serializable {
 				}
 				System.out.println((String.format("    Total collection Amount :      %f   ", totalCollection)));
 
-			} catch (ParseException e) {
+			} catch (ParseException e) 
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+			
+			}
+			
+			if(isCashPay)
+			{
+				try {
+
+					dst = hrly.parse(stDate);
+
+					for (ReportCollection c : parkingManager.getCreditReportcollection()) {
+
+						if (hrly.format(c.getCreditcardpaymentTime()).equals(stDate)) {
+							totalCollection += c.getAmount();
+							reportWeekly.add(c);
+						}
+					}
+
+					for (ReportCollection cc : reportWeekly)
+
+					{
+
+						System.out.println((String.format("    %tc             %s         %s       %f   ", cc.getCreditcardpaymentTime(), cc
+								.getCCNumner().toString(), cc.getTicketID().toString(), cc.getAmount())));
+					}
+					System.out.println((String.format("    Total collection Amount :      %f   ", totalCollection)));
+
+				} catch (ParseException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			
 			}
 
 			// List<HourlyData> exitdata = new ArrayList<HourlyData>();
@@ -2193,7 +2206,7 @@ public class parkingGUI extends JFrame implements Serializable {
 		objgui.parkingManager = iparkingSystemManager;
 
 		objgui.parkingManager.initialize(getIntValue(args[2], 10), getIntValue(args[3], 60));
-		System.out.println("ParkingService server  is running.....");
+		System.out.println("Parking client is running.....");
 
 		// Ensure the gatestatus
 		if (objgui != null) {
