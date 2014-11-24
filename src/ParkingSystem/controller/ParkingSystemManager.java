@@ -408,6 +408,15 @@ implements IparkingSystemManager, Serializable {
 		return s;
 	}
 
+
+
+	@Override
+	public List<ReportCollection> getCreditReportcollection() throws RemoteException {
+		return getPaymanager().getCreditReportcollection();
+	}
+
+
+	
 	@Override
 	public Ticket makePayment(CreditCard card, String ticketId, PaymentType type) {
 		
@@ -418,10 +427,21 @@ implements IparkingSystemManager, Serializable {
 		context.Pay(theTicketfromID, card, paymanager);
 		return theTicketfromID;
 	}
-
+	
 	@Override
-	public List<ReportCollection> getCreditReportcollection() throws RemoteException {
-		return getPaymanager().getCreditReportcollection();
+	public Ticket makePayment(Double  fare, String ticketId, PaymentType type) {
+		
+		PaymentContext context = new PaymentContext();
+		context.setPaymentType(type);
+		
+		Ticket theTicketfromID = getTheTicketfromID(ticketId);
+		context.Pay(theTicketfromID, null, paymanager);
+		return theTicketfromID;
 	}
+
+
+	
+
+	
 
 }
