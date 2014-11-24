@@ -32,9 +32,8 @@ public class CreditCardStrategy implements paymentStratagy {
 
 		Status isSuccessfull = null;
 
-		if (ticket.getTicketAmount() > 0) {
-			card.setAmount(ticket.getTicketAmount());
-
+		if (card.getAmount() > 0) {
+			ticket.setTicketAmount(card.getAmount());
 			isSuccessfull = paymanager.transactionManager.ProcessTheTransaction(card);
 		}
 

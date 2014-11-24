@@ -456,39 +456,32 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				Calendar c = Calendar.getInstance();
 				Date paymentDt = c.getTime();
-				CreditCard card = parkingManager.getCreditCard();
+//				CreditCard card = parkingManager.getCreditCard();
+				CreditCard card = new CreditCard();
 				// we need to capture failed payments as well?
 				card.setCreditcardpaymentTime(paymentDt);
 
 				if (validentry && error.size() < 1) {
 
 					card.setCCNumner(jTextField4.getText());
-
 					card.setTicketID(UUID.fromString(jTextField10.getText()));
-
 					card.setExpiryDate(jTextField6.getText());
-
 					card.setCvvNumber(Integer.parseInt(jTextField7.getText()));
-
 					// Date is set outside
-
 					Double dueAmount = Double.parseDouble(label10.getText());
-
 					card.setAmount(dueAmount);
+					
+					
+//					Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
+					
+					Ticket t = parkingManager.makePayment(card, choice1.getSelectedItem(), PaymentType.Credit);
+									
 
-					PaymentContext context = new PaymentContext();
+					
 
-					// parkingManager.processPayment(parkingManager.ticket,
-					// parkingManager.getPaymanager().getCreditCard());
+//					Double amount = context.Pay(t, card, null);
 
-					// context.setPaymentStrategy(con);
-					context.setPaymentType(PaymentType.Credit);
-
-					Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
-
-					Double amount = context.Pay(t, card, parkingManager.getThePaymanager());
-
-					if (amount == 0)
+					if (t.getTicketAmount() == 0)
 						status = new Status(true, "payment has been succesful");
 
 					jTextField8.setText(status.getMessage());
@@ -507,7 +500,7 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
 
-				Double amount = context.Pay(t, null, parkingManager.getThePaymanager());
+				Double amount = context.Pay(t, null, null);
 
 				// double amount =
 				// parkingManager.processPayment(parkingManager.ticket, null);
@@ -683,7 +676,7 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				dst = hrly.parse(stDate);
 
-				for (ReportCollection c : parkingManager.getThePaymanager().getCreditReportcollection()) {
+				for (ReportCollection c : parkingManager.getCreditReportcollection()) {
 
 					if (hrly.format(c.getCreditcardpaymentTime()).equals(stDate)) {
 						totalCollection += c.getAmount();

@@ -12,12 +12,18 @@ import java.util.UUID;
 
 
 
+
+
+
+
 import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.ParkingStatus;
+import ParkingSystem.Entities.PaymentType;
 import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Reports.HourlyData;
+import ParkingSystem.Reports.ReportCollection;
 import ParkingSystem.controller.FraudPreventionManagement;
 import ParkingSystem.controller.GateManagement;
 import ParkingSystem.controller.OccupancyManagement;
@@ -77,10 +83,14 @@ public interface IparkingSystemManager extends java.rmi.Remote {
 	public Ticket getTheTicketFromNamePlate(String nampePlateID) throws RemoteException;
 	
 	public List<HourlyData> getTheDataCollectionforReport(ReportType rptType,Date date) throws RemoteException;
+
+	public Ticket makePayment(CreditCard card, String ticketId, PaymentType type) throws RemoteException;
+
+	public List<ReportCollection> getCreditReportcollection() throws RemoteException;
 	
-	public CreditCard  getCreditCard() throws RemoteException;
+	//public CreditCard  getCreditCard() throws RemoteException;
 	
-	public PaymentManagement  getThePaymanager() throws RemoteException;
+//	spublic PaymentManagement  getThePaymanager() throws RemoteException;
 	
 	
 

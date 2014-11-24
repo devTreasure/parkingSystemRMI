@@ -13,11 +13,14 @@ import ParkingSystem.Entities.CreditCard;
 import ParkingSystem.Entities.Gate;
 import ParkingSystem.Entities.GateStatus;
 import ParkingSystem.Entities.ParkingStatus;
+import ParkingSystem.Entities.PaymentContext;
+import ParkingSystem.Entities.PaymentType;
 import ParkingSystem.Entities.ReportType;
 import ParkingSystem.Entities.Status;
 import ParkingSystem.Entities.Ticket;
 import ParkingSystem.Entities.TicketStatus;
 import ParkingSystem.Reports.HourlyData;
+import ParkingSystem.Reports.ReportCollection;
 import ParkingSystem.Common.IparkingSystemManager;
 
 public class ParkingSystemManager extends java.rmi.server.UnicastRemoteObject
@@ -364,21 +367,21 @@ implements IparkingSystemManager, Serializable {
 		return reportData;
 	}
 
-	@Override
-	public CreditCard getCreditCard() {
+//	@Override
+//	public CreditCard getCreditCard() {
+//
+//		CreditCard c = getPaymanager().getCreditCard();
+//
+//		return c ;
+//	}
 
-		CreditCard c = getPaymanager().getCreditCard();
-
-		return c ;
-	}
-
-	@Override
-	public PaymentManagement getThePaymanager() {
-		// TODO Auto-generated method stub
-
-		return  paymanager;
-
-	}
+//	@Override
+//	public PaymentManagement getThePaymanager() {
+//		// TODO Auto-generated method stub
+//
+//		return  paymanager;
+//
+//	}
 
 	@Override
 	public Status closeTheEntryGate(int gateID) throws RemoteException {
@@ -403,6 +406,22 @@ implements IparkingSystemManager, Serializable {
 		}
 		
 		return s;
+	}
+
+	@Override
+	public Ticket makePayment(CreditCard card, String ticketId, PaymentType type) {
+		
+		PaymentContext context = new PaymentContext();
+		context.setPaymentType(type);
+		
+		Ticket theTicketfromID = getTheTicketfromID(ticketId);
+		context.Pay(theTicketfromID, card, paymanager);
+		return theTicketfromID;
+	}
+
+	@Override
+	public List<ReportCollection> getCreditReportcollection() throws RemoteException {
+		return getPaymanager().getCreditReportcollection();
 	}
 
 }

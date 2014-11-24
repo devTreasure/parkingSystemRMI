@@ -1,9 +1,10 @@
 package ParkingSystem.Reports;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class ReportCollection {
+public class ReportCollection implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String CCNumner;

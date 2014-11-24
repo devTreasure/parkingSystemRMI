@@ -70,6 +70,7 @@ public class PaymentManagement implements Serializable {
 
 	public PaymentManagement() {
 		creditCard = new CreditCard();
+		System.out.println("--------------Hello----------------");
 	}
 
 	public CreditCard getCreditCard() {
