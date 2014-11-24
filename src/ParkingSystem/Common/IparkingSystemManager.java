@@ -89,11 +89,8 @@ public interface IparkingSystemManager extends java.rmi.Remote {
 
 	public List<ReportCollection> getCreditReportcollection() throws RemoteException;
 
-	Ticket makePayment(Double fare, String ticketId, PaymentType type);
-	
-	//public CreditCard  getCreditCard() throws RemoteException;
-	
-//	spublic PaymentManagement  getThePaymanager() throws RemoteException;
+	public Ticket makePayment(Double fare, String ticketId, PaymentType type)  throws RemoteException;
+
 	
 	
 

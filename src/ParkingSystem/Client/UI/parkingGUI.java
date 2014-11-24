@@ -493,19 +493,30 @@ public class parkingGUI extends JFrame implements Serializable {
 
 			{
 
-				PaymentContext context = new PaymentContext();
+				//PaymentContext context = new PaymentContext();
 
 				// context.setPaymentStrategy(new CashPayStrategy());
-				context.setPaymentType(PaymentType.Cash);
+				//context.setPaymentType(PaymentType.Cash);
 
-				Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
+				//Ticket t = parkingManager.getTheTicketfromID(choice1.getSelectedItem());
 
-				Double amount = context.Pay(t, null, null);
-
+				String stramount=jTextField1.getText();
+				Double amount = null;
+				if(stramount != null && stramount.length()>0)
+				{
+					amount=Double.parseDouble(stramount);
+				}
+				
+				
+				
+				Ticket t = parkingManager.makePayment(amount, choice1.getSelectedItem(), PaymentType.Cash);
+				
+				//Double amount = context.Pay(t, null, null);
+					
 				// double amount =
 				// parkingManager.processPayment(parkingManager.ticket, null);
 
-				if (amount == 0)
+				if (t.getTicketAmount() == 0)
 					status = new Status(true, "payment has been succesful");
 
 				jTextField8.setText(status.getMessage());

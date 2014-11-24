@@ -428,15 +428,28 @@ implements IparkingSystemManager, Serializable {
 		return theTicketfromID;
 	}
 	
+
+
+	
+
 	@Override
-	public Ticket makePayment(Double  fare, String ticketId, PaymentType type) {
+	public Ticket makePayment(Double fare, String ticketId, PaymentType type) throws RemoteException {
+		// TODO Auto-generated method stub
 		
 		PaymentContext context = new PaymentContext();
+		System.out.print("make payment ");
+		System.out.print("make payment "+ticketId);
+		System.out.print("make payment "+type.toString());
 		context.setPaymentType(type);
 		
 		Ticket theTicketfromID = getTheTicketfromID(ticketId);
+		
+		theTicketfromID.setTicketAmount(fare);
+		
 		context.Pay(theTicketfromID, null, paymanager);
+		
 		return theTicketfromID;
+		
 	}
 
 
