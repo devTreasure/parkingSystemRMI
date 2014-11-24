@@ -7,7 +7,7 @@ import ParkingSystem.controller.PaymentManagement;
 
 public class CashPayStrategy implements paymentStratagy {
 
-	PaymentManagement payManager = new PaymentManagement();
+	//PaymentManagement payManager = new PaymentManagement();
 
 	@Override
 	public double pay(Ticket ticket, CreditCard card,
@@ -31,7 +31,7 @@ public class CashPayStrategy implements paymentStratagy {
 			objCash.setTicketID(ticket.getTicektID());
 			objCash.setAmount(ticket.getTicketAmount());
 
-			payManager.setCashPaymentcollection(objCash);
+			paymanager.setCashPaymentcollection(objCash);
 			// Boolean isSuccessfull=true;
 			// isSuccessful = new Status(true, "Payment has been successful");
 

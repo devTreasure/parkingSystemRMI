@@ -17,6 +17,14 @@ public class GateManagement implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Map<Integer, Gate> entryGatecollection = new HashMap<Integer, Gate>();
+	public Map<Integer, Gate> getEntryGatecollection() {
+		return entryGatecollection;
+	}
+
+	public void setEntryGatecollection(Map<Integer, Gate> entryGatecollection) {
+		this.entryGatecollection = entryGatecollection;
+	}
+
 	private Map<Integer, Gate> exitGatecollection = new HashMap<Integer, Gate>();
 
 	// No gate assigned initially

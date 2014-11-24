@@ -104,7 +104,8 @@ public class PaymentManagement implements Serializable {
 
 		Status isSuccessfull = null;
 
-		if (ticket.getTicketAmount() > 0) {
+		if (ticket.getTicketAmount() > 0) 
+		{
 			card.setAmount(ticket.getTicketAmount());
 			isSuccessfull = transactionManager.ProcessTheTransaction(card);
 		}

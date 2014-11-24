@@ -128,7 +128,7 @@ public class parkingGUI extends JFrame implements Serializable {
 			// Get ticket id from UI
 			String currentTicketId = choice1.getSelectedItem();
 			jTextField3.setText("Opening Gate");
-		
+
 			Status status = parkingManager.openEntryGateFor(currentTicketId, entryGateNumber);
 			jTextField3.setText(status.getMessage());
 
@@ -182,7 +182,9 @@ public class parkingGUI extends JFrame implements Serializable {
 
 	private void closeGateActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
-			parkingManager.closeEntryGate(entryGateNumber);
+			//parkingManager.closeEntryGate(entryGateNumber);
+			
+			Status status=parkingManager.closeTheEntryGate(entryGateNumber);
 			// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
 		} catch (Exception ex) {
 
@@ -389,25 +391,25 @@ public class parkingGUI extends JFrame implements Serializable {
 					int year = cal.get(Calendar.YEAR);
 					int month = cal.get(Calendar.MONTH) + 1;
 
-					String entermonth[] = new String[2];
+				//	String entermonth[] = new String[2];
 
 					try {
 						String string = jTextField6.getText().toString();
-						String[] parts = string.split("/");
+						String[] entermonth = string.split("/");
 
 						if (entermonth.length > 0) {
 
-							if (parts[0].length() > 2) {
+							if (entermonth[0].length() > 2) {
 								error.add("Please enter valid month");
 
 							}
 
-							if (parts[0].length() > 4) {
+							if (entermonth[0].length() > 4) {
 								error.add("Please enter valid year");
 							}
 
-							int entedmonth = Integer.parseInt(parts[0]);
-							int entedyear = Integer.parseInt(parts[1]);
+							int entedmonth = Integer.parseInt(entermonth[0]);
+							int entedyear = Integer.parseInt(entermonth[1]);
 
 							if (entedyear < year) {
 
@@ -536,11 +538,6 @@ public class parkingGUI extends JFrame implements Serializable {
 
 			if (entryGateNumber == 1 || entryGateNumber == 2 || entryGateNumber == 3 && (!parkingManager.isCurrentparkingFull()))
 
-			// if ((parkingManager.getGatemanagement().gate.GateId == 1 ||
-			// parkingManager.getGatemanagement().gate.GateId == 2 ||
-			// parkingManager
-			// .getGatemanagement().gate.GateId == 3) &&
-			// (!parkingManager.getOccupancy().isParkingfull()))
 			{
 				jLabel4.setText("Printing Ticket...Please Wait");
 
@@ -566,43 +563,57 @@ public class parkingGUI extends JFrame implements Serializable {
 
 				label5.setText(currentCount);
 				Status status = null;
-				if (ticket.getTicektStatus() == TicketStatus.Active) {
+				if (ticket.getTicektStatus() == TicketStatus.Active) 
+				{
 					// parkingManager.getGatemanagement().gate =
 					// parkingManager.getGatemanagement().OpenEntryGate(parkingManager.getGatemanagement().gate.GateId);
-					String ticketID =   ticket.getTicektID().toString();
-							//choice1.getSelectedItem();
-					
+					String ticketID = ticket.getTicektID().toString();
+					// choice1.getSelectedItem();
+
 					jTextField3.setText("Opening");
-					
+
 					status = parkingManager.openEntryGateFor(ticketID, entryGateNumber);
 					JOptionPane.showMessageDialog(null, "Gate is Opened");
 
 					JOptionPane.showMessageDialog(null, "Succesful Entry");
 
-					status=parkingManager.closeEntryGate(entryGateNumber);
-					jTextField3.setText(status.getMessage());
+					//status = parkingManager.closeEntryGate(entryGateNumber);
+					//status= parkingManager.closeEntryGate(entryGateNumber);
+					Status gatestatus=null;
+					try
+					{
+						gatestatus=parkingManager.closeTheEntryGate(entryGateNumber);
+						if(gatestatus!=null)
+						jTextField3.setText(gatestatus.getMessage());
+					}
+					catch(Exception ex)
+					{
+						ex.printStackTrace();
+					}
+
 					
-		
+					
+
 					// parkingManager.getFraudManager().ticketgatecollection.put(parkingManager.ticket,parkingManager.getGatemanagement().gate);
 
-					
 					// jTextField3.setText(parkingManager.getGatemanagement().gate.gateStatus.toString());
-					//jTextField3.setText(status.getMessage());
+					// jTextField3.setText(status.getMessage());
 
-					//if (status.getMessage().equals(GateStatus.Open.toString()))
+					// if
+					// (status.getMessage().equals(GateStatus.Open.toString()))
 
 					// if (parkingManager.getGatemanagement().gate.gateStatus ==
 					// GateStatus.Open)
 
-					//{
-						//parkingManager.closeEntryGate(entryGateNumber);
+					// {
+					// parkingManager.closeEntryGate(entryGateNumber);
 
-						// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
-						JOptionPane.showMessageDialog(null, "Gate closed");
+					// parkingManager.getGatemanagement().closeEntryGate(parkingManager.getGatemanagement().gate.GateId);
+					JOptionPane.showMessageDialog(null, "Gate closed");
 
-						// parkingManager.getGatemanagement().gate.GateId = 0;
-						entryGateNumber = 0;
-					//}
+					// parkingManager.getGatemanagement().gate.GateId = 0;
+					entryGateNumber = 0;
+					// }
 
 					if (ticket != null && ticket.getTicektStatus() == TicketStatus.Active) {
 						choice1.add(ticket.getTicketID().toString());
@@ -612,7 +623,7 @@ public class parkingGUI extends JFrame implements Serializable {
 						jLabel4.setText("Error...Please Retry");
 					}
 
-					jTextField3.setText(status.toString());
+					// jTextField3.setText(status.toString());
 
 				} else if (status.equals("Invalid Ticket")) {
 					jTextField3.setText("Closed");
@@ -656,12 +667,12 @@ public class parkingGUI extends JFrame implements Serializable {
 	}
 
 	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {
-		JOptionPane.showMessageDialog(null, "Collection Report");
+	
 		String choiceSelection = choiseReport.getSelectedItem();
 		double totalCollection = 0;
 		if (choiceSelection == "Hourly") {
 			Date dst = null;
-
+			
 			SimpleDateFormat hrly = new SimpleDateFormat("MM/dd/yy");
 
 			List<ReportCollection> reportWeekly = new ArrayList<ReportCollection>();
@@ -987,79 +998,7 @@ public class parkingGUI extends JFrame implements Serializable {
 			reportType = ReportType.Weekly;
 
 			List<HourlyData> reportHourly1 = parkingManager.getTheDataCollectionforReport(reportType, dtweekStart);
-			// parkingManager.getTicketmager().getTicketcollection()
-			/*
-			 * 
-			 * 
-			 * while (y <= 11.59) { HourlyData datacount = null; HourlyData data
-			 * = null; HourlyData Exitdata = null;
-			 * 
-			 * int count = 0; int hour = 0; int exitcount = 0;
-			 * 
-			 * data = new HourlyData();
-			 * 
-			 * k = y;
-			 * 
-			 * data.setTimeperiod(String.format("Hours %d -  %d", k, ++k));
-			 * 
-			 * reportWeekly.add(data);
-			 * 
-			 * for (Ticket t : reportHourlyData) {
-			 * 
-			 * if (t.getEntryTime().after(dstart) ||
-			 * t.getEntryTime().before(dend)) // Week comparing {
-			 * 
-			 * if ((t.getEntryTime() != null && t.getEntryTime() .getHours() ==
-			 * y)) {
-			 * 
-			 * if (t.getEntryTime().getMinutes() <= 59) { data = new
-			 * HourlyData();
-			 * 
-			 * count++; hour = y;
-			 * 
-			 * data.setEntrydt(t.getEntryTime());
-			 * data.setTicketid(t.getTicektID());
-			 * 
-			 * reportWeekly.add(data);
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * if ((t.getExitTime() != null && t.getExitTime() .getHours() ==
-			 * y)) {
-			 * 
-			 * if (t.getExitTime().getMinutes() <= 59) { Exitdata = new
-			 * HourlyData();
-			 * 
-			 * exitcount++;
-			 * 
-			 * hour = y;
-			 * 
-			 * Exitdata.setExitdt(t.getExitTime());
-			 * Exitdata.setTicketid(t.getTicektID());
-			 * 
-			 * reportWeekly.add(Exitdata);
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * }
-			 * 
-			 * datacount = new HourlyData(); HourlyData dataExitcount = new
-			 * HourlyData();
-			 * 
-			 * datacount.setHourlyEntry(count);
-			 * dataExitcount.setHourlyExit(exitcount);
-			 * 
-			 * if (count > 0) reportWeekly.add(datacount); if (exitcount > 0)
-			 * reportWeekly.add(dataExitcount);
-			 * 
-			 * y++; }
-			 */
+		
 
 			for (HourlyData hd : reportHourly1) {
 
@@ -1211,7 +1150,11 @@ public class parkingGUI extends JFrame implements Serializable {
 			// label10.setText(Double.toString(parkingManager.ticket.getTicketAmount()));
 
 			// ------------
-			Status status = parkingManager.calculateFare("ticektId");
+			
+			
+			String ticketID= choice1.getSelectedItem();
+			
+			Status status = parkingManager.calculateFare(ticketID);
 			label10.setText(status.getMessage());
 
 		} catch (Exception ex) {
@@ -1301,7 +1244,9 @@ public class parkingGUI extends JFrame implements Serializable {
 		buttonPrintTicket.setToolTipText("");
 		buttonPrintTicket.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
+
 				printTicketActionPerformed(evt);
+
 			}
 		});
 
@@ -1682,7 +1627,10 @@ public class parkingGUI extends JFrame implements Serializable {
 																														javax.swing.GroupLayout.Alignment.LEADING)
 																												.addComponent(
 																														jTextField1,
-																														javax.swing.GroupLayout.Alignment.LEADING)))
+																														javax.swing.GroupLayout.Alignment.LEADING,
+																														javax.swing.GroupLayout.DEFAULT_SIZE,
+																														130,
+																														Short.MAX_VALUE)))
 																				.addGroup(
 																						layout.createParallelGroup(
 																								javax.swing.GroupLayout.Alignment.TRAILING,
@@ -2247,7 +2195,7 @@ public class parkingGUI extends JFrame implements Serializable {
 		if (objgui != null) {
 			objgui.IntiliazeWindows();
 
-			objgui.setSize(670, 865);//
+			objgui.setSize(675, 865);//
 
 			objgui.show();
 		}
