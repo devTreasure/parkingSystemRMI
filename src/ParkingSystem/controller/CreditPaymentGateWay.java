@@ -1,6 +1,8 @@
 package ParkingSystem.controller;
 
-public class CreditPaymentGateWay {
+import java.io.Serializable;
+
+public class CreditPaymentGateWay implements Serializable {
 
 	// this class is to mimic credit card payment authorization
 	public Boolean makePayment(Double amt) {

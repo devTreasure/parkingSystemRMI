@@ -226,10 +226,11 @@ implements IparkingSystemManager, Serializable {
 		String gateStatus = "";
 		Gate gate = null;
 		Ticket currentTicket = findTicketFromID(currentTicketId);
-		if (currentTicket == null && TicketStatus.Active.equals(currentTicket)) {
+		if (currentTicket == null && TicketStatus.Active.equals(currentTicket.getTicektStatus())) {
 
 			gate = getGatemanagement().OpenEntryGate(gateNumber);
-
+			
+			//gatemanagement.getEntryGatecollection()
 			// added for fraud
 			// prevention check
 			getFraudManager().ticketgatecollection.put(currentTicket, gate);
@@ -241,7 +242,9 @@ implements IparkingSystemManager, Serializable {
 				// Do nothing
 			}
 
-		} else {
+		}
+		else 
+		{
 			gateStatus = "Invalid Ticket";
 		}
 
@@ -255,21 +258,7 @@ implements IparkingSystemManager, Serializable {
 		getPaymanager().setHourlyRate(hourlyRate);
 	}
 
-	@Override
-	public Status closeEntryGate(int gateID) {
-		/*
-		 * if (getGatemanagement().gate.gateStatus == GateStatus.Open) { gate =
-		 * getGatemanagement().closeEntryGate(gateNumber); } gateStatus =
-		 * gate.gateStatus.toString();
-		 */
-		Gate g = getGatemanagement().getEntryGate(gateID);
-		if (g != null && g.gateStatus == GateStatus.Open) {
-			g = getGatemanagement().closeEntryGate(gateID);
-		}
-		
-		return new Status(true, g.gateStatus.toString());
-
-	}
+	
 
 	@Override
 	public Status calculateFare(String ticketID) throws RemoteException {
@@ -353,7 +342,7 @@ implements IparkingSystemManager, Serializable {
 	public Ticket getTheTicketfromID(String strID) {
 
 		Ticket t = null;
-		t = getTheTicketfromID(strID);
+		t = findTicketFromID(strID);
 		return t;
 
 	}
@@ -369,8 +358,10 @@ implements IparkingSystemManager, Serializable {
 
 	@Override
 	public List<HourlyData> getTheDataCollectionforReport(ReportType rptType, Date date) {
+		
+		List<HourlyData> reportData=	reportManagement.generateReport(rptType, date);
 		// TODO Auto-generated method stub
-		return null;
+		return reportData;
 	}
 
 	@Override
@@ -378,15 +369,40 @@ implements IparkingSystemManager, Serializable {
 
 		CreditCard c = getPaymanager().getCreditCard();
 
-		return null;
+		return c ;
 	}
 
 	@Override
 	public PaymentManagement getThePaymanager() {
 		// TODO Auto-generated method stub
 
-		return getPaymanager();
+		return  paymanager;
 
+	}
+
+	@Override
+	public Status closeTheEntryGate(int gateID) throws RemoteException {
+		// TODO Auto-generated method stub
+		Status s=null;
+		 
+		try
+		{
+		Gate g = getGatemanagement().getEntryGate(gateID);
+		if (g != null && g.gateStatus == GateStatus.Open) 
+		{
+			g = getGatemanagement().closeEntryGate(gateID);
+			
+			s=new Status(true, g.gateStatus.toString());
+		}
+		
+	
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		
+		return s;
 	}
 
 }

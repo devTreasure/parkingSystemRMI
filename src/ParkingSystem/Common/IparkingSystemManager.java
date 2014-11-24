@@ -60,7 +60,7 @@ public interface IparkingSystemManager extends java.rmi.Remote {
 
 	public void initialize(int parkingCapacity, int hourlyRate) throws RemoteException;
 
-	public Status closeEntryGate(int gateID) throws RemoteException;
+	public Status closeTheEntryGate(int gateID) throws RemoteException;
 
 	public Status calculateFare(String ticketID) throws RemoteException;
 	

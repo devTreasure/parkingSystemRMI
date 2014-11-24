@@ -1,5 +1,7 @@
 package ParkingSystem.Entities;
 
-public enum GateType {
+import java.io.Serializable;
+
+public enum GateType implements Serializable  {
 	entry, exit
 }
