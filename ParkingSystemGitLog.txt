@@ -1,0 +1,56 @@
+e4de375, bhaveen@gmail.com, Sun, 23 Nov 2014 21:35:04 -0700, Updated : CashPayment remoting server code.
+52b535a, bhaveen@gmail.com, Sun, 23 Nov 2014 20:43:15 -0700, Refactored Cash Strategy.
+5188c4e, bhaveen@gmail.com, Sun, 23 Nov 2014 19:16:04 -0700, Refactored strategy pattern  for Remoting object
+6e1668b, bhaveen@gmail.com, Sun, 23 Nov 2014 19:03:11 -0700, Refactored Amountcollection entities for Remoting object.
+c1f7bc9, bhaveen@gmail.com, Sun, 23 Nov 2014 17:37:10 -0700, updated code
+f555c2f, bhaveen@gmail.com, Sun, 23 Nov 2014 17:21:35 -0700, Refactored Gatemanagement and Paymanagement for remoting object.
+91d04b5, bhaveen@gmail.com, Sun, 23 Nov 2014 11:38:47 -0700, Refactored: Updated client server methods fir Gate opening and closing.
+855eeca, bhaveen@gmail.com, Sun, 23 Nov 2014 11:36:48 -0700, Refactored: updated Client and server side method calls with status return type.
+fc29f35, bhaveen@gmail.com, Sun, 23 Nov 2014 02:33:20 -0700, Refactored : Client server code is  refactored.
+70e9919, bhaveen@gmail.com, Sun, 23 Nov 2014 00:36:40 -0700, Added  code for remoting.
+cdc55ff, bhaveen@gmail.com, Sun, 23 Nov 2014 00:04:08 -0700, code refactored.
+7bf1aac, bhaveen@gmail.com, Sat, 22 Nov 2014 23:59:21 -0700, GIT ignore file.
+b0680f6, bhaveen@gmail.com, Sat, 22 Nov 2014 20:37:56 -0700, Refactored Entity - Cash.
+7ea8596, bhaveen@gmail.com, Sat, 22 Nov 2014 19:29:24 -0700, Added New Entity For namePlate Generator to mmmic nameplate scanning.
+6fb76fe, bhaveen@gmail.com, Sat, 22 Nov 2014 19:26:06 -0700, Refactored Ticket entity.
+9009a43, bhaveen@gmail.com, Sat, 22 Nov 2014 19:23:44 -0700, Refactored ParkingManager controller .
+6ea3663, bhaveen@gmail.com, Sat, 22 Nov 2014 19:21:43 -0700, Updated CreditCard class.
+b641331, bhaveen@gmail.com, Sat, 22 Nov 2014 19:16:48 -0700, Refactore methods for CreditCard Class.
+f0253b3, bhaveen@gmail.com, Sat, 22 Nov 2014 19:13:18 -0700, Refactored Transactionmanagement controller.
+67b6e4b, bhaveen@gmail.com, Sat, 22 Nov 2014 19:09:16 -0700, Added method processCashForParkingFeePayment  in paymentManagement
+978e034, bhaveen@gmail.com, Sat, 22 Nov 2014 19:06:15 -0700, Refactored Report controller.
+8254596, bhaveen@gmail.com, Sat, 22 Nov 2014 19:01:57 -0700, Added new entity for Reporting.
+29727b9, bhaveen@gmail.com, Sat, 22 Nov 2014 18:50:03 -0700, Added new entity  reportCollection
+296b748, bhaveen@gmail.com, Sat, 22 Nov 2014 18:30:47 -0700, Added method to WeeklyReportData.
+63fe205, bhaveen@gmail.com, Sat, 22 Nov 2014 18:27:56 -0700, Implented logic to MonthlyReportData class .
+157bd93, bhaveen@gmail.com, Sat, 22 Nov 2014 18:26:38 -0700, Implemented  method to calculate the hourly Data.
+b3fa0d0, bhaveen@gmail.com, Sat, 22 Nov 2014 18:17:58 -0700, Added new mothod calculateDailyStatistics  for reporting purpose.
+17f6f3c, bhaveen@gmail.com, Sat, 22 Nov 2014 18:16:00 -0700, Refactored Report interface for  to included start and end dates for reporting purpose.
+56b7eee, bhaveen@gmail.com, Sat, 22 Nov 2014 18:12:01 -0700, Added enetity cash for cash payment
+ccf128b, bhaveen@gmail.com, Sat, 22 Nov 2014 18:09:47 -0700, Implemented pyment strategy
+64127fb, bhaveen@gmail.com, Sat, 22 Nov 2014 18:08:44 -0700, Added paymentContext class for strategy
+da5b25c, bhaveen@gmail.com, Sat, 22 Nov 2014 18:06:58 -0700, Added Obervable interface
+f74b568, bhaveen@gmail.com, Sat, 22 Nov 2014 18:05:35 -0700, Added Observer interface
+bca9b84, bhaveen@gmail.com, Sat, 22 Nov 2014 17:59:04 -0700, Added new class CreditCard for strategy pattern
+6b325cc, bhaveen@gmail.com, Sat, 22 Nov 2014 17:57:58 -0700, Added new class CashPay for statagy pattern implemenataion
+d6aedd4, bhaveen@gmail.com, Sat, 22 Nov 2014 17:12:53 -0700, Update Jpnael UI set up
+34ddedb, bhaveen@gmail.com, Sat, 22 Nov 2014 17:09:33 -0700, Updated logic for ticket fare calculation
+fb5f701, bhaveen@gmail.com, Sat, 22 Nov 2014 17:07:59 -0700, Added logic to enable controls for lost ticket retrievel.
+ab985ed, bhaveen@gmail.com, Sat, 22 Nov 2014 17:06:44 -0700, Added method for lost ticket retrievel
+f2487d8, bhaveen@gmail.com, Sat, 22 Nov 2014 16:27:42 -0700, added logic for weekly,daly report collection and refortored factory for report.
+6286f9d, bhaveen@gmail.com, Sat, 22 Nov 2014 16:24:50 -0700, Added report functionality for amount collection.
+46b6aa8, bhaveen@gmail.com, Sat, 22 Nov 2014 16:00:11 -0700, Updated gate openning  logic
+069c6e8, bhaveen@gmail.com, Sat, 22 Nov 2014 15:58:49 -0700, Refactored PRINTING operation.
+82ae0bf, bhaveen@gmail.com, Sat, 22 Nov 2014 15:56:39 -0700, Refactore print ticket operaition to display name plate .
+0bde0dd, bhaveen@gmail.com, Sat, 22 Nov 2014 15:41:48 -0700, Added mannaul pay operation  with existing credit card operation.
+b3d8bc5, bhaveen@gmail.com, Sat, 22 Nov 2014 15:24:56 -0700, refactored exit gate operation.
+4e0f40b, bhaveen@gmail.com, Sat, 22 Nov 2014 15:23:15 -0700, Refactored entry gate closing operation.
+9d2481b, bhaveen@gmail.com, Sat, 22 Nov 2014 15:21:43 -0700, Added time simmuation to change the parking duration based on date and time input for existing tickets.
+75bb39e, bhaveen@gmail.com, Sat, 22 Nov 2014 15:19:15 -0700, Refactored gate closing operation..
+100e72d, bhaveen@gmail.com, Sat, 22 Nov 2014 15:17:52 -0700, Added functionality to locate  the ticket when ticket is lost
+012de30, bhaveen@gmail.com, Sat, 22 Nov 2014 15:09:38 -0700, Refoactored gateoperation before accomodating Observer.
+2721ce1, bhaveen@gmail.com, Mon, 17 Nov 2014 01:47:35 -0700, new code
+ab6c9cc, bhaveen@gmail.com, Fri, 14 Nov 2014 15:26:35 -0700, Updates
+19a6825, bhaveen@gmail.com, Fri, 14 Nov 2014 15:00:15 -0700, this is intial commit
+b9f351e, bhaveen@gmail.com, Fri, 14 Nov 2014 14:49:39 -0700, added initial files to RMI branch
+fcfc57b, parkingsystem@users.noreply.github.com, Fri, 14 Nov 2014 14:41:41 -0700, Initial commit
